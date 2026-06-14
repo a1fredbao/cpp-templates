@@ -7,9 +7,13 @@
 #include <iostream>
 #include <vector>
 
+#ifndef AFMT_FLAT_GEOMETRY_EPS
+#define AFMT_FLAT_GEOMETRY_EPS 1e-9
+#endif
+
 // Recommended eps is 0.25 * given precision
-template <long double eps>
 struct Double {
+    static constexpr double eps = AFMT_FLAT_GEOMETRY_EPS;
     long double val;
 
     constexpr Double(long double v = 0) : val(v) {}
@@ -17,13 +21,13 @@ struct Double {
         return (x > eps) - (x < -eps);
     }
     // constexpr long double val(void) const { return val; }
-    constexpr operator long double(void) const { return val; }
-    constexpr bool operator==(const Double &rhs) const { return sgn(val - rhs.val) == 0; }
-    constexpr bool operator!=(const Double &rhs) const { return sgn(val - rhs.val) != 0; }
-    constexpr bool operator<(const Double &rhs) const { return sgn(val - rhs.val) < 0; }
-    constexpr bool operator>(const Double &rhs) const { return sgn(val - rhs.val) > 0; }
-    constexpr bool operator<=(const Double &rhs) const { return sgn(val - rhs.val) <= 0; }
-    constexpr bool operator>=(const Double &rhs) const { return sgn(val - rhs.val) >= 0; }
+    explicit constexpr operator long double(void) const { return val; }
+    friend constexpr bool operator==(const Double &lhs, const Double &rhs) { return sgn(lhs.val - rhs.val) == 0; }
+    friend constexpr bool operator!=(const Double &lhs, const Double &rhs) { return sgn(lhs.val - rhs.val) != 0; }
+    friend constexpr bool operator<(const Double &lhs, const Double &rhs) { return sgn(lhs.val - rhs.val) < 0; }
+    friend constexpr bool operator>(const Double &lhs, const Double &rhs) { return sgn(lhs.val - rhs.val) > 0; }
+    friend constexpr bool operator<=(const Double &lhs, const Double &rhs) { return sgn(lhs.val - rhs.val) <= 0; }
+    friend constexpr bool operator>=(const Double &lhs, const Double &rhs) { return sgn(lhs.val - rhs.val) >= 0; }
     constexpr Double operator+(void) const { return *this; }
     constexpr Double operator-(void) const { return Double(-val); }
     constexpr Double &operator+=(const Double &rhs) {
@@ -112,18 +116,18 @@ struct PolarAngleComparator {
         const Vec<T> &base = Vec<T>(1, 0)
     ) : o(o), base(base) {}
 
-    inline int get_half(const Vec<T> &v) {
+    inline int get_half(const Vec<T> &v) const {
         T crs = cross(base, v);
-        if (crs > 0) return 0;   // counterclockwise to base
-        if (crs < 0) return 1;   // clockwise to base
-        return dot(base, v) < 0; // collinear to base, but opposite direction
+        if (crs > T(0)) return 0;   // counterclockwise to base
+        if (crs < T(0)) return 1;   // clockwise to base
+        return dot(base, v) < T(0); // collinear to base, but opposite direction
     }
 
     inline bool operator()(const Point<T> &a, const Point<T> &b) const {
-        const Vec<T> va(a.x - o.x, a.y - o.y);
-        const Vec<T> vb(b.x - o.x, b.y - o.y);
+        Vec<T> va(a.x - o.x, a.y - o.y);
+        Vec<T> vb(b.x - o.x, b.y - o.y);
         int ha = get_half(va), hb = get_half(vb);
-        return ha != hb ? ha < hb : cross(va, vb) > 0;
+        return ha != hb ? ha < hb : cross(va, vb) > T(0);
     }
 };
 
@@ -132,12 +136,18 @@ std::vector<Point<T>> convex_hull(std::vector<Point<T>> P) { // graham scan, O(n
     if (P.size() <= 1) return P;
 
     std::vector<Point<T>> H;
-    std::swap(P[0], *std::min_element(P.begin(), P.end()));
+
+    auto cmp = [&](Point<T> &A, Point<T> &B) {
+        return A.y != B.y ? A.y < B.y : A.x < B.x;
+    };
+
+    std::swap(P[0], *std::min_element(P.begin(), P.end(), cmp));
     std::sort(P.begin() + 1, P.end(), PolarAngleComparator<T>(P[0]));
     for (const auto &p : P) {
-        while (H.size() >= 2 && cross(H.back() - H[H.size() - 2], p - H.back()) <= 0) H.pop_back();
+        while (H.size() >= 2 && cross(H.back() - H[H.size() - 2], p - H.back()) <= T(0)) H.pop_back();
         H.push_back(p);
     }
+    H.push_back(P[0]);
     return H;
 }
 
