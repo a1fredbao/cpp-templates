@@ -15,7 +15,7 @@ Modern C++ 2D computational geometry template, offering Point/Vector structures,
 #include <vector>
 
 int main() {
-    std::vector<Point<Double>> P = {{0, 0}, {2, 0}, {0, 2}, {1, 1}, {2, 2}};
+    std::vector<Point<Double>> P = { {0, 0}, {2, 0}, {0, 2}, {1, 1}, {2, 2} };
     auto hull = convex_hull(P);
     for (auto &pt : hull) {
         std::cout << pt.x << " " << pt.y << "\n";
@@ -33,11 +33,11 @@ int main() {
 
 ## Important Functions and Time Complexity
 
-| Function | Description | Time Complexity |
-| --- | --- | --- |
-| `dot` | Computes the dot product of two vectors | $O(1)$ |
-| `cross` | Computes the cross product of two vectors | $O(1)$ |
-| `convex_hull` | Generates a 2D convex hull from a set of points | $O(N \log N)$ |
+| Function      | Description                                     | Time Complexity |
+| ------------- | ----------------------------------------------- | --------------- |
+| `dot`         | Computes the dot product of two vectors         | $O(1)$          |
+| `cross`       | Computes the cross product of two vectors       | $O(1)$          |
+| `convex_hull` | Generates a 2D convex hull from a set of points | $O(N \log N)$   |
 
 ## Notes
 - Floating point coordinates should use the `Double` helper class as coordinate type `T` to avoid precision issues. Epsilon is configurable via the `AFMT_FLAT_GEOMETRY_EPS` macro (defaults to `1e-9`).
