@@ -1,10 +1,4 @@
 contents:
-  - name: IntelliSense 配置
-    codes:
-      - c-cpp-properties.json
-  - name: 调试配置
-    codes:
-      - launch.json
   - name: 快读快写
     codes:
       - fast-io.hpp

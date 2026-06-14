@@ -8,6 +8,9 @@ contents:
   - name: 计算几何（新）
     codes:
       - flat-geometry.hpp
+  - name: 类欧几里得 (floor_sum)
+    codes:
+      - floor-sum.hpp
   - name: 卷积
     codes:
       - conv.hpp

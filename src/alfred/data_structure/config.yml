@@ -2,6 +2,9 @@ contents:
   - name: 区间出现次数统计
     codes:
       - appear-statistics.hpp
+  - name: 二进制警报
+    codes:
+      - binary-alarm.hpp
   - name: 01字典树
     codes:
       - binary-trie.hpp
@@ -42,6 +45,9 @@ contents:
   - name: ST 表
     codes:
       - sparse-table.hpp
+  - name: 安全哈希 (Splitmix)
+    codes:
+      - splitmix.hpp
   - name: 前缀和
     codes:
       - sum.hpp

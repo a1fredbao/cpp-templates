@@ -2,6 +2,9 @@ contents:
   - name: 逆序对
     codes:
       - pair-counting.hpp
+  - name: 基数排序
+    codes:
+      - radix-sort.hpp
   - name: 工具
     codes:
       - utils.hpp
