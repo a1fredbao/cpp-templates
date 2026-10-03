@@ -107,7 +107,7 @@ inline void write(T x) {
     __buf.ps(buf + it, 40 - it);
 }
 template <int mod>
-inline void write(ModInt<mod> x) { write(x.x); }
+inline void write(ModInt<mod> x) { write(x.val()); }
 inline void write(const std::string &s) {
     __buf.ps(s.data(), s.size());
 }

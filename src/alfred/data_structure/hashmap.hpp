@@ -5,8 +5,6 @@
 #include <utility>
 #include <vector>
 
-std::vector<bool> s;
-
 template <class K, class V>
 struct HashMap { // HashMap for integer keys.
     using u32 = unsigned int;
