@@ -41,6 +41,7 @@ jobs:
           # include: your-own-include/
           exclude: |
             main.py
+            tools/
           # exclude: |
           #   pdf/
           #   tex/

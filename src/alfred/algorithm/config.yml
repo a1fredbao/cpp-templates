@@ -1,7 +1,13 @@
 contents:
-  - name: 逆序对
+  - name: Binary Search
     codes:
-      - pair-counting.hpp
-  - name: 基数排序
+      - binary_search.hpp
+  - name: Pair Counting
     codes:
-      - radix-sort.hpp
+      - pair_counting.hpp
+  - name: Radix Sort
+    codes:
+      - radix_sort.hpp
+  - name: Discretization
+    codes:
+      - discretization.hpp

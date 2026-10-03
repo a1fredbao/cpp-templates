@@ -16,16 +16,15 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.x'
-          # cache not work because restriction between different tags
-          # cache: 'pip'
-      - run: |
-          pip install -r requirements.txt
-          python main.py --output-file output.tex
-          python main.py --config-file config-compact.yml --output-file output-compact.tex
-      - run: |
-          chmod +x script.sh
-          ./script.sh
+          python-version: "3.x"
+      - name: Install PDF dependencies
+        run: pip install -r tools/pdf/requirements.txt
+      - name: Generate LaTeX
+        run: python -m tools.pdf --preset both --output-dir .
+      - name: Download fonts
+        run: |
+          chmod +x tools/pdf/scripts/download-fonts.sh
+          ./tools/pdf/scripts/download-fonts.sh
       - uses: xu-cheng/latex-action@v4
         with:
           root_file: |
@@ -35,15 +34,15 @@ jobs:
           extra_fonts: |
             ./fonts/*.otf
             ./fonts/*.ttf
-      - name: Rename Output Files
+      - name: Rename output files
         run: |
-          for f in output*.pdf; do
-            if [ ! -e "$f" ]; then
+          for file in output*.pdf; do
+            if [ ! -e "$file" ]; then
               continue
             fi
-            base="${f%.*}"
-            ext=".${f##*.}"
-            mv -- "$f" "${base}_${{ github.ref_name }}${ext}"
+            base="${file%.*}"
+            extension=".${file##*.}"
+            mv -- "$file" "${base}_${{ github.ref_name }}${extension}"
           done
       - name: Release
         uses: softprops/action-gh-release@v3

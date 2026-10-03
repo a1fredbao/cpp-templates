@@ -1,0 +1,6 @@
+name: compact
+root-directory: src/alfred
+latex-pre: tools/pdf/templates/latex-compact-pre.tex
+latex-post: tools/pdf/templates/latex-post.tex
+title: Alfred's ICPC Templates
+author: Alfred Chester

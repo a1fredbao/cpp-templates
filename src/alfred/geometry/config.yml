@@ -1,0 +1,19 @@
+contents:
+  - name: Point
+    codes:
+      - point.hpp
+  - name: Convex Hull
+    codes:
+      - convex_hull.hpp
+  - name: Rotating Calipers
+    codes:
+      - rotating_calipers.hpp
+  - name: Half-Plane Intersection
+    codes:
+      - half_plane_intersection.hpp
+  - name: Minkowski Sum
+    codes:
+      - minkowski.hpp
+  - name: Minimum Enclosing Circle
+    codes:
+      - minimum_enclosing_circle.hpp

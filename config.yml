@@ -1,5 +1,0 @@
-root-directory: src/alfred
-latex-pre: latex-pre.tex
-latex-post: latex-post.tex
-title: Alfred's ICPC Templates
-author: Alfred Chester

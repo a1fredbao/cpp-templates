@@ -1,27 +1,34 @@
 contents:
-  - name: 二进制警报
+  - name: Fenwick
     codes:
-      - binary-alarm.hpp
-  - name: 笛卡尔树
+      - fenwick.hpp
+  - name: Segment Tree
     codes:
-      - cartesian.hpp
-  - name: 珂朵莉树
+      - segment_tree.hpp
+  - name: Lazy Segment Tree
     codes:
-      - chtholly.hpp
-  - name: 并查集
-    directory: dsu
-  - name: 动态 bitset（效率极低）
+      - lazy_segment_tree.hpp
+  - name: Sparse Table
     codes:
-      - dynamic-bitset.hpp
-  - name: 哈希表
+      - sparse_table.hpp
+  - name: DSU
     codes:
-      - hashmap.hpp
-  - name: pbds 平衡树
+      - dsu.hpp
+  - name: Weighted DSU
     codes:
-      - pbds-balance-tree.hpp
-  - name: 滑动窗口
+      - weighted_dsu.hpp
+  - name: Rollback DSU
     codes:
-      - sliding-window.hpp
-  - name: 安全哈希 (Splitmix)
+      - rollback_dsu.hpp
+  - name: Segment Tree Merge
     codes:
-      - splitmix.hpp
+      - segment_tree_merge.hpp
+  - name: Persistent Segment Tree
+    codes:
+      - persistent_segment_tree.hpp
+  - name: Binary Trie
+    codes:
+      - binary_trie.hpp
+  - name: Link-Cut Tree
+    codes:
+      - link_cut_tree.hpp

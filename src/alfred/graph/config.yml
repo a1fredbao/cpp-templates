@@ -1,9 +1,22 @@
 contents:
-  - name: 2-SAT
+  - name: SCC
     codes:
-      - twosat.hpp
-  - name: 最大流
+      - scc.hpp
+  - name: EBCC
     codes:
-      - maxflow.hpp
-  - name: 最小费用最大流
-    codes: min-cost-maxflow.hpp
+      - ebcc.hpp
+  - name: Two-SAT
+    codes:
+      - two_sat.hpp
+  - name: Shortest Path
+    codes:
+      - shortest_path.hpp
+  - name: Dinic
+    codes:
+      - dinic.hpp
+  - name: Min-Cost Flow
+    codes:
+      - min_cost_flow.hpp
+  - name: Bipartite Matching
+    codes:
+      - bipartite_matching.hpp

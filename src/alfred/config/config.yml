@@ -1,7 +1,7 @@
 contents:
-  - name: 快读快写
+  - name: Compile
     codes:
-      - fast-io.hpp
-  - name: Intellisense 配置
+      - compile.hpp
+  - name: IO
     codes:
-      - c-cpp-properties.json
+      - io.hpp

@@ -1,9 +1,0 @@
-{
-    "files.defaultLanguage": "cpp",
-    "editor.formatOnType": true,
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.acceptSuggestionOnEnter": "off",
-    "C_Cpp.clang_format_sortIncludes": true,
-    "C_Cpp.errorSquiggles": "disabled",
-    "C_Cpp.default.defines": ["LOCAL", "DEBUG"]
-}
