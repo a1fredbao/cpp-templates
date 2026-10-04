@@ -1,6 +1,4 @@
-#ifndef AFDS_WEIGHTED_DSU
-#define AFDS_WEIGHTED_DSU
-
+#pragma once
 #include <numeric>
 #include <vector>
 
@@ -43,5 +41,3 @@ struct WeightedDSU {
 		return w[y] - w[x];
 	}
 };
-
-#endif // AFDS_WEIGHTED_DSU

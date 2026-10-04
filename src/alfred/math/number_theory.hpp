@@ -1,6 +1,4 @@
-#ifndef AFMT_GCD
-#define AFMT_GCD
-
+#pragma once
 #include <array>
 #include <bitset>
 #include <cmath>
@@ -68,5 +66,3 @@ template <class T>
 inline T gcd(T a, T b) {
 	return b == 0 ? a : gcd(b, a % b);
 }
-
-#endif // AFMT_GCD

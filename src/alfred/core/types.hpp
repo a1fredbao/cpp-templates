@@ -1,6 +1,4 @@
-#ifndef AFMT_INTEGER_TYPES
-#define AFMT_INTEGER_TYPES
-
+#pragma once
 #include <numeric>
 #include <type_traits>
 
@@ -81,5 +79,3 @@ using u128 = unsigned __int128;
 using i64 = long long;
 using i128 = __int128;
 using f64 = long double;
-
-#endif

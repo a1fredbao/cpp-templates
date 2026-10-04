@@ -1,6 +1,4 @@
-#ifndef AFGR_MIN_COST_MAXFLOW
-#define AFGR_MIN_COST_MAXFLOW
-
+#pragma once
 #include <algorithm>
 #include <cassert>
 #include <limits>
@@ -223,5 +221,3 @@ struct MCMF_Dijkstra {
 		return a;
 	}
 };
-
-#endif

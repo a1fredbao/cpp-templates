@@ -1,6 +1,4 @@
-#ifndef AFDS_FENWICK
-#define AFDS_FENWICK
-
+#pragma once
 #include <vector>
 
 template <class T>
@@ -32,5 +30,3 @@ struct Fenwick {
 	}
 	inline T query(int l, int r) { return query(r) - query(l - 1); }
 };
-
-#endif // AFDS_FENWICK

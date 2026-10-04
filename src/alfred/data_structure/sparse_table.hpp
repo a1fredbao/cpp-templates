@@ -1,6 +1,4 @@
-#ifndef AFDS_SPARSE_TABLE
-#define AFDS_SPARSE_TABLE
-
+#pragma once
 #include <numeric>
 #include <vector>
 
@@ -58,5 +56,3 @@ public:
 		return ans;
 	}
 };
-
-#endif // AFDS_SPARSE_TABLE

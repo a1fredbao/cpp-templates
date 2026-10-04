@@ -1,6 +1,4 @@
-#ifndef AFMT_FLOOR_SUM
-#define AFMT_FLOOR_SUM
-
+#pragma once
 // Calculate $\sum_{i = 0}^{n - 1} \lfloor \frac{ai + b}{m} \rfloor$ in
 // $O(\min\{a, m, n\})$
 unsigned long long floor_sum_unsigned(
@@ -29,5 +27,3 @@ long long floor_sum(long long a, long long b, long long m, long long n) {
 	}
 	return ans + floor_sum_unsigned(a, b, m, n);
 }
-
-#endif // !AFMT_FLOOR_SUM

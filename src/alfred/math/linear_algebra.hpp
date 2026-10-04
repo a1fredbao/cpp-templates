@@ -1,6 +1,4 @@
-#ifndef AFMT_LINEAR
-#define AFMT_LINEAR
-
+#pragma once
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -148,5 +146,3 @@ struct XORBasis {
 		return ans + (has_zero ? 1ULL : 0ULL); // 1-based
 	}
 };
-
-#endif // !AFMT_LINEAR

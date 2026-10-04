@@ -1,6 +1,4 @@
-#ifndef AFSTR_HASHED_STRING
-#define AFSTR_HASHED_STRING
-
+#pragma once
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
@@ -79,5 +77,3 @@ struct PalindromeCheck {
 		return H1.get_hash(l, r) == H2.get_hash(n - 1 - r, n - 1 - l);
 	}
 };
-
-#endif // AFSTR_HASHED_STRING

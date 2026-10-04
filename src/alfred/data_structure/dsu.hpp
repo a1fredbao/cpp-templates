@@ -1,6 +1,4 @@
-#ifndef AFDS_DSU
-#define AFDS_DSU
-
+#pragma once
 #include <numeric>
 #include <vector>
 
@@ -33,5 +31,3 @@ struct DSU {
 		return true;
 	}
 };
-
-#endif // AFDS_DSU

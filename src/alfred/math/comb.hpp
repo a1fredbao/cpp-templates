@@ -1,6 +1,4 @@
-#ifndef AFMT_COMB
-#define AFMT_COMB
-
+#pragma once
 #include <algorithm>
 #include <cassert>
 #include <vector>
@@ -61,5 +59,3 @@ public:
 	}
 	inline mint catalan(int n) { return binom(2 * n, n) - binom(2 * n, n - 1); }
 };
-
-#endif // AFMT_COMB

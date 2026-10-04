@@ -1,6 +1,4 @@
-#ifndef AFDS_CANCEL_DSU
-#define AFDS_CANCEL_DSU
-
+#pragma once
 #include <numeric>
 #include <vector>
 
@@ -36,5 +34,3 @@ public:
 		while (t--) _cancel();
 	}
 };
-
-#endif // AFDS_CANCEL_DSU

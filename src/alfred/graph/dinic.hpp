@@ -1,6 +1,4 @@
-#ifndef AFGR_MAXFLOW
-#define AFGR_MAXFLOW
-
+#pragma once
 #include <limits>
 #include <queue>
 #include <vector>
@@ -85,5 +83,3 @@ struct MaxFlow {
 		return a;
 	}
 };
-
-#endif

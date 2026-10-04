@@ -1,6 +1,4 @@
-#ifndef AFSTR_SUFFIX_ARRAY
-#define AFSTR_SUFFIX_ARRAY
-
+#pragma once
 #include <algorithm>
 #include <limits>
 #include <numeric>
@@ -177,5 +175,3 @@ public:
 		return ST.query(i + 1, j).val;
 	}
 };
-
-#endif
