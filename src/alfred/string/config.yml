@@ -1,10 +1,25 @@
 contents:
-  - name: 字符串哈希
+  - name: Hash
     codes:
-      - hashed-string.hpp
-  - name: 后缀数组
+      - hash.hpp
+  - name: KMP
     codes:
-      - suffix-array.hpp
-  - name: 模糊匹配
+      - kmp.hpp
+  - name: Z Function
     codes:
-      - fuzz-matching.hpp
+      - z_function.hpp
+  - name: Suffix Array
+    codes:
+      - suffix_array.hpp
+  - name: Suffix Automaton
+    codes:
+      - suffix_automaton.hpp
+  - name: Aho-Corasick
+    codes:
+      - aho_corasick.hpp
+  - name: Palindrome Automaton
+    codes:
+      - palindrome_automaton.hpp
+  - name: Lyndon
+    codes:
+      - lyndon.hpp

@@ -3,10 +3,13 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
   workflow_dispatch:
     inputs:
       ignore_prev_result:
-        description: 'Ignore previous result'
+        description: "Ignore previous result"
         type: boolean
         default: false
 
@@ -41,6 +44,7 @@ jobs:
           # include: your-own-include/
           exclude: |
             main.py
+            tools/
           # exclude: |
           #   pdf/
           #   tex/

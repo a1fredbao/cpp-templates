@@ -48,5 +48,11 @@ output.tex
 *.aux
 *.log
 *.pdf
+*.synctex.gz
 
 temp/
+.competitive-verifier/bundled/
+.cph-ng/
+__pycache__/
+.pytest_cache/
+fonts/

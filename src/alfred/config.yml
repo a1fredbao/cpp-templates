@@ -1,13 +1,15 @@
 contents:
-  - name: 环境配置
-    directory: config
-  - name: 算法
+  - name: Core
+    directory: core
+  - name: Algorithm
     directory: algorithm
-  - name: 数据结构
+  - name: Data Structure
     directory: data_structure
-  - name: 图论
+  - name: Graph
     directory: graph
-  - name: 数学
+  - name: Math
     directory: math
-  - name: 字符串
+  - name: String
     directory: string
+  - name: Geometry
+    directory: geometry

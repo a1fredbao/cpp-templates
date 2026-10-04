@@ -1,7 +1,0 @@
-contents:
-  - name: 快读快写
-    codes:
-      - fast-io.hpp
-  - name: Intellisense 配置
-    codes:
-      - c-cpp-properties.json

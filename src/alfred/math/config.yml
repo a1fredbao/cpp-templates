@@ -1,31 +1,25 @@
 contents:
-  - name: 组合数
+  - name: ModInt
+    codes:
+      - modint.hpp
+  - name: Number Theory
+    codes:
+      - number_theory.hpp
+  - name: Prime
+    codes:
+      - prime.hpp
+  - name: Combinatorics
     codes:
       - comb.hpp
-  - name: 计算几何（新）
+  - name: Linear Algebra
     codes:
-      - flat-geometry.hpp
-  - name: 计算几何（jiangly）
+      - linear_algebra.hpp
+  - name: Floor Sum
     codes:
-      - ../../jiangly/math/09A-Flat-Geometry.hpp
-  - name: 类欧几里得 (floor_sum)
+      - floor_sum.hpp
+  - name: Fast Walsh-Hadamard Transform
     codes:
-      - floor-sum.hpp
-  - name: 卷积
+      - fast_walsh_hadamard.hpp
+  - name: Polynomial
     codes:
-      - conv.hpp
-  - name: 按值域预处理的快速 gcd
-    codes:
-      - gcd.hpp
-  - name: 拉格朗日插值
-    codes:
-      - lagrange.hpp
-  - name: 线性代数
-    codes:
-      - linear.hpp
-  - name: modint
-    codes:
-      - mod-int.hpp
-  - name: 素性（jiangly）
-    codes:
-      - ../../jiangly/math/08-Prime.hpp
+      - poly.hpp

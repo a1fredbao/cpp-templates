@@ -1,27 +1,22 @@
 contents:
-  - name: 二进制警报
+  - name: Fenwick
     codes:
-      - binary-alarm.hpp
-  - name: 笛卡尔树
+      - fenwick.hpp
+  - name: Sparse Table
     codes:
-      - cartesian.hpp
-  - name: 珂朵莉树
+      - sparse_table.hpp
+  - name: DSU
     codes:
-      - chtholly.hpp
-  - name: 并查集
-    directory: dsu
-  - name: 动态 bitset（效率极低）
+      - dsu.hpp
+  - name: Weighted DSU
     codes:
-      - dynamic-bitset.hpp
-  - name: 哈希表
+      - weighted_dsu.hpp
+  - name: Rollback DSU
     codes:
-      - hashmap.hpp
-  - name: pbds 平衡树
+      - rollback_dsu.hpp
+  - name: Binary Trie
     codes:
-      - pbds-balance-tree.hpp
-  - name: 滑动窗口
+      - binary_trie.hpp
+  - name: Link-Cut Tree
     codes:
-      - sliding-window.hpp
-  - name: 安全哈希 (Splitmix)
-    codes:
-      - splitmix.hpp
+      - link_cut_tree.hpp

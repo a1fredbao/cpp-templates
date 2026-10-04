@@ -2,24 +2,25 @@ BasedOnStyle: LLVM
 AlignAfterOpenBracket: BlockIndent
 # AlignConsecutiveAssignments: Consecutive
 AlignArrayOfStructures: Right
-UseTab: Never
+UseTab: ForIndentation
 IndentWidth: 4
 TabWidth: 4
 BreakBeforeBraces: Attach
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLoopsOnASingleLine: true
-AllowShortBlocksOnASingleLine: true
 IndentCaseLabels: true
-ColumnLimit: 0
+ColumnLimit: 80
 AccessModifierOffset: -4
-NamespaceIndentation: All
+NamespaceIndentation: None
 FixNamespaceComments: false
 AllowShortCaseLabelsOnASingleLine: true
-AlwaysBreakTemplateDeclarations: MultiLine
-BinPackParameters: true
+BreakTemplateDeclarations: Yes
+BinPackParameters: BinPack
 BraceWrapping:
   AfterCaseLabel: true
   AfterClass: true
 AlignConsecutiveMacros: AcrossEmptyLinesAndComments
-AlignTrailingComments: Always
+AlignTrailingComments:
+  Kind: Always
+AllowShortEnumsOnASingleLine: true
 InsertNewlineAtEOF: true
