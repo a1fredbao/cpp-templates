@@ -4,32 +4,27 @@
 #include <cassert>
 #include <cstdint>
 #include <numeric>
-#include <type_traits>
 #include <utility>
 #include <vector>
 
 #include "../core/types.hpp"
 
-namespace prime_detail {
-
 using u64 = uint64_t;
 using u128 = __uint128_t;
 
-inline u64 mul_mod(u64 a, u64 b, u64 mod) {
-	return static_cast<u64>(u128(a) * b % mod);
-}
+namespace nt {
 
-inline u64 pow_mod(u64 base, u64 exponent, u64 mod) {
-	u64 result = 1;
-	while (exponent != 0) {
-		if (exponent & 1) result = mul_mod(result, base, mod);
-		base = mul_mod(base, base, mod);
-		exponent >>= 1;
+inline u64 mul(u64 a, u64 b, u64 m) { return u128(a) * b % m; }
+
+inline u64 pw(u64 a, u64 b, u64 m) {
+	u64 r = 1;
+	for (; b; b >>= 1, a = mul(a, a, m)) {
+		if (b & 1) r = mul(r, a, m);
 	}
-	return result;
+	return r;
 }
 
-inline bool is_prime_u64(u64 n) {
+inline bool isp(u64 n) {
 	if (n < 2) return false;
 	for (u64 p :
 	     {2ull, 3ull, 5ull, 7ull, 11ull, 13ull, 17ull, 19ull, 23ull, 29ull,
@@ -37,134 +32,113 @@ inline bool is_prime_u64(u64 n) {
 		if (n % p == 0) return n == p;
 	}
 	u64 d = n - 1;
-	int shift = 0;
-	while ((d & 1) == 0) {
-		d >>= 1;
-		shift++;
-	}
-	for (u64 base :
+	int s = 0;
+	for (; ~d & 1; d >>= 1) s++;
+	for (u64 a :
 	     {2ull, 325ull, 9375ull, 28178ull, 450775ull, 9780504ull,
 	      1795265022ull}) {
-		if (base % n == 0) continue;
-		u64 value = pow_mod(base % n, d, n);
-		if (value == 1 || value == n - 1) continue;
-		bool witness = true;
-		for (int i = 1; i < shift; i++) {
-			value = mul_mod(value, value, n);
-			if (value == n - 1) {
-				witness = false;
-				break;
-			}
+		if (a % n == 0) continue;
+		u64 x = pw(a % n, d, n);
+		if (x == 1 || x == n - 1) continue;
+		for (int i = 1; i < s; i++) {
+			x = mul(x, x, n);
+			if (x == n - 1) break;
 		}
-		if (witness) return false;
+		if (x != n - 1) return false;
 	}
 	return true;
 }
 
-inline u64 pollard_rho(u64 n) {
-	if (n % 2 == 0) return 2;
+inline u64 rho(u64 n) {
+	if (~n & 1) return 2;
 	if (n % 3 == 0) return 3;
-	for (u64 constant = 1;; constant++) {
-		u64 x = 2, y = 2, divisor = 1;
-		auto next = [&](u64 value) {
-			return (mul_mod(value, value, n) + constant) % n;
-		};
-		while (divisor == 1) {
-			x = next(x);
-			y = next(next(y));
-			u64 difference = x > y ? x - y : y - x;
-			divisor = std::gcd(difference, n);
+	for (u64 c = 1;; c++) {
+		auto f = [&](u64 x) { return (mul(x, x, n) + c) % n; };
+		u64 x = 2, y = 2, g = 1;
+		while (g == 1) {
+			x = f(x), y = f(f(y));
+			g = std::gcd(x > y ? x - y : y - x, n);
 		}
-		if (divisor != n) return divisor;
+		if (g != n) return g;
 	}
 }
 
-inline void factorize_u64(u64 n, std::vector<std::pair<u64, int>> &factors) {
+inline void fac(u64 n, std::vector<std::pair<u64, int>> &v) {
 	if (n == 1) return;
-	if (is_prime_u64(n)) {
-		factors.push_back({n, 1});
+	if (isp(n)) {
+		v.push_back({n, 1});
 		return;
 	}
-	u64 divisor = pollard_rho(n);
-	factorize_u64(divisor, factors);
-	factorize_u64(n / divisor, factors);
+	u64 d = rho(n);
+	fac(d, v), fac(n / d, v);
 }
 
-} // namespace prime_detail
+} // namespace nt
 
 template <class T>
 bool is_prime(T n) {
-	static_assert(is_integral<T>::value, "is_prime requires an integral type");
+	static_assert(is_integral<T>::value, "integral type required");
 	if constexpr (is_signed_int<T>::value) {
 		if (n < 0) return false;
 	}
 	if (n < 2) return false;
 	if constexpr (sizeof(T) <= 8) {
-		return prime_detail::is_prime_u64(static_cast<uint64_t>(n));
+		return nt::isp(static_cast<u64>(n));
 	}
-	for (T divisor = 2; divisor <= n / divisor; divisor++) {
-		if (n % divisor == 0) return false;
+	for (T d = 2; d <= n / d; d++) {
+		if (n % d == 0) return false;
 	}
 	return true;
 }
 
-// Given in integer n. Returns (primes, minp).
-std::pair<std::vector<int>, std::vector<int>> euler_sieve(int n) {
-	std::vector<int> primes, minp(n + 1);
+inline std::pair<std::vector<int>, std::vector<int>> euler_sieve(int n) {
+	std::vector<int> p, lp(n + 1);
 	for (int i = 2; i <= n; i++) {
-		if (minp[i] == 0) {
-			minp[i] = i;
-			primes.push_back(i);
-		}
-		for (auto &p : primes) {
-			if (i * p > n) break;
-			minp[i * p] = p;
-			if (i % p == 0) break;
+		if (!lp[i]) lp[i] = i, p.push_back(i);
+		for (int q : p) {
+			if (i * q > n) break;
+			lp[i * q] = q;
+			if (i % q == 0) break;
 		}
 	}
-	return std::make_pair(primes, minp);
+	return {p, lp};
 }
 
 template <class T>
 std::vector<std::pair<T, int>> factorize(T n) {
-	static_assert(is_integral<T>::value, "factorize requires an integral type");
+	static_assert(is_integral<T>::value, "integral type required");
 	if constexpr (is_signed_int<T>::value) {
 		assert(n >= 0);
 	}
-	std::vector<std::pair<T, int>> result;
-	if (n < 2) return result;
+	std::vector<std::pair<T, int>> res;
+	if (n < 2) return res;
 	if constexpr (sizeof(T) <= 8) {
-		std::vector<std::pair<prime_detail::u64, int>> factors;
-		prime_detail::factorize_u64(static_cast<prime_detail::u64>(n), factors);
-		std::sort(factors.begin(), factors.end());
-		for (auto [prime, exponent] : factors) {
-			if (!result.empty() &&
-			    result.back().first == static_cast<T>(prime)) {
-				result.back().second += exponent;
+		std::vector<std::pair<u64, int>> v;
+		nt::fac(static_cast<u64>(n), v);
+		std::sort(v.begin(), v.end());
+		for (auto [p, e] : v) {
+			if (!res.empty() && res.back().first == static_cast<T>(p)) {
+				res.back().second += e;
 			} else {
-				result.push_back({static_cast<T>(prime), exponent});
+				res.push_back({static_cast<T>(p), e});
 			}
 		}
 	} else {
-		for (T divisor = 2; divisor <= n / divisor; divisor++) {
-			if (n % divisor != 0) continue;
-			int exponent = 0;
-			while (n % divisor == 0) {
-				n /= divisor;
-				exponent++;
-			}
-			result.push_back({divisor, exponent});
+		for (T d = 2; d <= n / d; d++) {
+			if (n % d) continue;
+			int e = 0;
+			for (; n % d == 0; n /= d) e++;
+			res.push_back({d, e});
 		}
-		if (n != 1) result.push_back({n, 1});
+		if (n != 1) res.push_back({n, 1});
 	}
-	return result;
+	return res;
 }
 
 template <class T>
 inline T phi(T n) {
-	auto factors = factorize(n);
-	for (auto [prime, exponent] : factors) {
-		n = n / prime * (prime - 1);
+	for (auto [p, e] : factorize(n)) {
+		n = n / p * (p - 1);
 	}
 	return n;
 }
