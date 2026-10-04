@@ -24,14 +24,12 @@ src/alfred/graph/            connectivity, flows, matchings
 src/alfred/math/             number theory, algebra, transforms
 src/alfred/math/polynomial/  NTT and formal power series
 src/alfred/string/           hashing and string structures
-src/alfred/tree/             tree preprocessing and decomposition
 src/alfred/geometry/         point, convexity, and intersection algorithms
 ```
 
 Umbrella headers:
 
 - `src/alfred/all.hpp`: all stable modules.
-- `src/alfred/all_debug.hpp`: `all.hpp` plus debug printing.
 
 ## Verification
 

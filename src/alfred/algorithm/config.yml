@@ -1,7 +1,4 @@
 contents:
-  - name: Binary Search
-    codes:
-      - binary_search.hpp
   - name: Pair Counting
     codes:
       - pair_counting.hpp

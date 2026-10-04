@@ -11,7 +11,5 @@ contents:
     directory: math
   - name: String
     directory: string
-  - name: Tree
-    directory: tree
   - name: Geometry
     directory: geometry

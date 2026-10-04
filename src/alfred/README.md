@@ -13,7 +13,6 @@ uses umbrella headers for convenient submission and printing.
 - `math/`: number theory, combinatorics, linear algebra, and transforms.
 - `math/polynomial/`: NTT and formal power series operations.
 - `string/`: hashing, KMP, Z, suffix array, automata, and Lyndon tools.
-- `tree/`: LCA, HLD, tree difference, DSU on tree, centroid decomposition.
 - `geometry/`: 2D and 3D geometry.
 
 ## Umbrella headers
