@@ -1,7 +1,0 @@
-contents:
-  - name: Compile
-    codes:
-      - compile.hpp
-  - name: IO
-    codes:
-      - io.hpp

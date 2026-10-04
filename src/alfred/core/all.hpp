@@ -1,9 +1,9 @@
 #pragma once
 
-#include "macros.hpp"
-#include "types.hpp"
-#include "constants.hpp"
 #include "bit.hpp"
-#include "random.hpp"
+#include "constants.hpp"
 #include "io.hpp"
+#include "macros.hpp"
+#include "random.hpp"
+#include "types.hpp"
 #include "utils.hpp"

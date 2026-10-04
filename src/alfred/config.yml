@@ -15,9 +15,3 @@ contents:
     directory: tree
   - name: Geometry
     directory: geometry
-  - name: Config
-    directory: config
-  - name: Online
-    directory: online
-  - name: Onsite
-    directory: onsite

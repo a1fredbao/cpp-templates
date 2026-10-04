@@ -1,3 +1,3 @@
-exclude: ["src/alfred/config/optimize-header.h"]
+exclude: []
 title: Alfred's CP Library
 theme: jekyll-theme-hacker

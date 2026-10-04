@@ -26,16 +26,12 @@ src/alfred/math/polynomial/  NTT and formal power series
 src/alfred/string/           hashing and string structures
 src/alfred/tree/             tree preprocessing and decomposition
 src/alfred/geometry/         point, convexity, and intersection algorithms
-src/alfred/online/           online-contest-only harnesses
-src/alfred/onsite/           compact onsite bundles
 ```
 
 Umbrella headers:
 
 - `src/alfred/all.hpp`: all stable modules.
 - `src/alfred/all_debug.hpp`: `all.hpp` plus debug printing.
-- `src/alfred/online.hpp`: `all.hpp` plus online harnesses.
-- `src/alfred/onsite.hpp`: compact subset for printed material.
 
 ## Verification
 
@@ -72,6 +68,4 @@ not part of the library build and must not be included by `src/alfred`.
 - Prefer small interfaces with deep implementations.
 - Keep core headers self-contained and free of mutable global state.
 - Return results instead of printing from library modules.
-- Put online-only debugging and stress tooling outside the library body.
 - Add one verification problem for every reusable algorithm or structure.
-- Keep the onsite bundle compact and independent of online harnesses.
