@@ -8,9 +8,6 @@ contents:
   - name: Two-SAT
     codes:
       - two_sat.hpp
-  - name: Shortest Path
-    codes:
-      - shortest_path.hpp
   - name: Dinic
     codes:
       - dinic.hpp

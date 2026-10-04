@@ -1,33 +1,59 @@
 #pragma once
 
-#include <cstring> // for memset
+#include <algorithm>
+#include <array>
+#include <cstdint>
 #include <type_traits>
 #include <vector>
 
-#define _SORTBYTE(TYPE, FR, TO, LEN, BIT, W)                                   \
-	memset(bucket, 0, sizeof(bucket));                                         \
-	for (TYPE *it = (FR) + LEN; it != (FR); it--)                              \
-		++bucket[(it[-1] >> BIT) & ((1 << W) - 1)];                            \
-	for (unsigned *it = bucket; it != bucket + ((1 << W) - 1); it++)           \
-		it[1] += it[0];                                                        \
-	for (TYPE *it = (FR) + LEN; it != (FR); it--)                              \
-		(TO)[--bucket[(it[-1] >> BIT) & ((1 << W) - 1)]] = it[-1];
-
-template <class T, const unsigned w = 4>
-static void radix_sort(T a[], const size_t n) {
-	static std::vector<T> b_vec;
-	if (b_vec.size() < n) {
-		b_vec.resize(n);
-	}
-	T *b = b_vec.data();
-	static unsigned bucket[1 << w];
-	const unsigned tot = sizeof(T) * 8;
+template <class T>
+inline uint64_t radix_key(T value) {
 	static_assert(
-	    tot % (2 * w) == 0, "The width of type must be divisible by 2w."
+	    std::is_integral_v<T> && !std::is_same_v<T, bool>,
+	    "radix_sort requires an integral type"
 	);
-	for (unsigned d1 = 0, d2 = w; d2 < tot;) {
-		_SORTBYTE(T, a, b, n, d1, w);
-		_SORTBYTE(T, b, a, n, d2, w);
-		d1 += w * 2, d2 += w * 2;
+	static_assert(sizeof(T) <= 8, "radix_sort supports integers up to 64 bits");
+	using U = std::make_unsigned_t<T>;
+	U result = static_cast<U>(value);
+	if constexpr (std::is_signed_v<T>) {
+		result ^= U(1) << (sizeof(U) * 8 - 1);
+	}
+	return static_cast<uint64_t>(result);
+}
+
+template <class T, unsigned width = 4>
+void radix_sort(T a[], size_t n) {
+	static_assert(width > 0 && width < 8, "radix width must be in [1, 7]");
+	static_assert(
+	    (sizeof(T) * 8) % (2 * width) == 0,
+	    "the width of the type must be divisible by 2 * width"
+	);
+	constexpr unsigned bucket_count = 1u << width;
+	constexpr uint64_t mask = bucket_count - 1;
+	std::vector<T> buffer(n);
+	std::array<unsigned, bucket_count> bucket{};
+	T *b = buffer.data();
+
+	auto sort_byte = [&](T *from, T *to, unsigned shift) {
+		std::fill(bucket.begin(), bucket.end(), 0u);
+		for (T *it = from + n; it != from;) {
+			--it;
+			++bucket[(radix_key(*it) >> shift) & mask];
+		}
+		for (unsigned i = 1; i < bucket_count; i++) {
+			bucket[i] += bucket[i - 1];
+		}
+		for (T *it = from + n; it != from;) {
+			--it;
+			to[--bucket[(radix_key(*it) >> shift) & mask]] = *it;
+		}
+	};
+
+	const unsigned total_bits = sizeof(T) * 8;
+	for (unsigned low = 0, high = width; high < total_bits;) {
+		sort_byte(a, b, low);
+		sort_byte(b, a, high);
+		low += width * 2;
+		high += width * 2;
 	}
 }

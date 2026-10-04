@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cassert>
 #include <vector>
 
 template <class _Tp>
@@ -11,9 +12,15 @@ private:
 
 public:
 	Mess(void) = default;
-	Mess(std::vector<_Tp> a) : v(a) { init(); }
-	inline _Tp origin(int idx) { return v[idx - 1]; }
-	inline void insert(_Tp x) { v.push_back(x); }
+	explicit Mess(std::vector<_Tp> a) : v(a) { init(); }
+	inline _Tp origin(int idx) {
+		assert(idx >= 1 && idx <= int(v.size()));
+		return v[idx - 1];
+	}
+	inline void insert(_Tp x) {
+		v.push_back(x);
+		initialized = false;
+	}
 	template <typename T, typename... V>
 	inline void insert(T x, V... v) {
 		insert(x), insert(v...);
@@ -27,7 +34,10 @@ public:
 		if (!initialized) init();
 		return std::lower_bound(v.begin(), v.end(), x) - v.begin() + 1;
 	}
-	inline bool exist(_Tp x) { return origin(query(x)) == x; }
+	inline bool exist(_Tp x) {
+		int idx = query(x);
+		return idx <= int(v.size()) && origin(idx) == x;
+	}
 	inline size_t size(void) noexcept {
 		if (!initialized) init();
 		return v.size();

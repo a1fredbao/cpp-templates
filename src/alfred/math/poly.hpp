@@ -198,6 +198,7 @@ public:
 		return result;
 	}
 
+	// Requires: the constant coefficient is non-zero.
 	Poly inv(int m) const {
 		assert(m >= 0);
 		assert(!this->empty());
@@ -212,6 +213,7 @@ public:
 		return result.trunc(m);
 	}
 
+	// Requires: the constant coefficient is exactly 1.
 	Poly log(int m) const {
 		assert(m >= 0);
 		assert(!this->empty());
@@ -220,6 +222,7 @@ public:
 		return (deriv() * inv(m)).integr().trunc(m);
 	}
 
+	// Requires: the constant coefficient is 0.
 	Poly exp(int m) const {
 		assert(m >= 0);
 		assert(this->empty() || (*this)[0] == 0);
@@ -234,6 +237,7 @@ public:
 		return result.trunc(m);
 	}
 
+	// Requires: exponent >= 0.
 	Poly pow(int exponent, int m) const {
 		assert(exponent >= 0);
 		assert(m >= 0);
@@ -250,6 +254,7 @@ public:
 		return (result.shift(first * exponent) * value.pow(exponent)).trunc(m);
 	}
 
+	// Requires: the constant coefficient is exactly 1.
 	Poly sqrt(int m) const {
 		assert(m >= 0);
 		assert(!this->empty());
@@ -310,6 +315,7 @@ public:
 
 	static Poly
 	interpolate(const std::vector<Value> &x, const std::vector<Value> &y) {
+		// Requires: x values are pairwise distinct and lengths match.
 		assert(x.size() == y.size());
 		int n = int(x.size());
 		if (n == 0) return Poly();

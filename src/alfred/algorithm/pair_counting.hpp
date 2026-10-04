@@ -4,13 +4,13 @@
 #include <vector>
 
 template <class T, class C>
-inline size_t __count_pair(
+inline size_t count_pair_impl(
     std::vector<T> &vec, std::vector<T> &tmp, size_t l, size_t r, C comp
 ) {
-	if (r - l == 1) return 0;
+	if (r - l <= 1) return 0;
 	size_t ans = 0, m = (l + r) / 2;
-	ans += __count_pair(vec, tmp, l, m, comp);
-	ans += __count_pair(vec, tmp, m, r, comp);
+	ans += count_pair_impl(vec, tmp, l, m, comp);
+	ans += count_pair_impl(vec, tmp, m, r, comp);
 	size_t it1 = l, it2 = m, it3 = l;
 	while (it1 < m && it2 < r) {
 		if (comp(vec[it1], vec[it2])) {
@@ -28,5 +28,5 @@ inline size_t __count_pair(
 template <class T, class C>
 inline size_t count_pair(std::vector<T> vec, C comp) {
 	std::vector<T> tmp(vec.size());
-	return __count_pair(vec, tmp, 0, vec.size(), comp);
+	return count_pair_impl(vec, tmp, 0, vec.size(), comp);
 }

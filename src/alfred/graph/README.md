@@ -1,3 +1,3 @@
 # Graph
 
-Connectivity, flows, matchings, shortest paths, and graph transformations.
+Connectivity, flows, matchings, and graph transformations.

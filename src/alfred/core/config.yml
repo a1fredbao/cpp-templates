@@ -1,16 +1,7 @@
 contents:
-  - name: Macros
-    codes:
-      - macros.hpp
   - name: Types
     codes:
       - types.hpp
-  - name: Constants
-    codes:
-      - constants.hpp
-  - name: Bit
-    codes:
-      - bit.hpp
   - name: Random
     codes:
       - random.hpp

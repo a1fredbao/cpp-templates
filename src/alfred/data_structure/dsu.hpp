@@ -7,7 +7,7 @@
 struct DSU {
 	std::vector<int> fa, siz;
 	DSU(void) = default;
-	DSU(int n) : fa(n + 1), siz(n + 1, 1) {
+	explicit DSU(int n) : fa(n + 1), siz(n + 1, 1) {
 		std::iota(fa.begin(), fa.end(), 0);
 	}
 	inline void init(int n) {

@@ -14,9 +14,6 @@ contents:
   - name: Linear Algebra
     codes:
       - linear_algebra.hpp
-  - name: Matrix Tree
-    codes:
-      - matrix_tree.hpp
   - name: Floor Sum
     codes:
       - floor_sum.hpp

@@ -7,5 +7,4 @@
 #include "ebcc.hpp"
 #include "min_cost_flow.hpp"
 #include "scc.hpp"
-#include "shortest_path.hpp"
 #include "two_sat.hpp"

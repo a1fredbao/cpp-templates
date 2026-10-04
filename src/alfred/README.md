@@ -5,11 +5,10 @@ uses umbrella headers for convenient submission and printing.
 
 ## Layout
 
-- `core/`: types, constants, random, IO, bit utilities, and shared helpers.
+- `core/`: types, random, IO, and shared helpers.
 - `algorithm/`: general algorithms that do not fit another domain.
-- `data_structure/`: Fenwick trees, segment trees, DSU, persistent structures,
-  balanced trees, and dynamic trees.
-- `graph/`: SCC, EBCC, max flow, min-cost flow, matching, shortest paths.
+- `data_structure/`: Fenwick trees, DSU, sparse tables, and dynamic trees.
+- `graph/`: SCC, EBCC, max flow, min-cost flow, and matching.
 - `math/`: number theory, combinatorics, linear algebra, and transforms.
 - `math/poly.hpp`: polynomial and formal power series operations.
 - `string/`: hashing, KMP, Z, suffix array, automata, and Lyndon tools.

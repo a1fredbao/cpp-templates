@@ -166,9 +166,9 @@ public:
 		}
 		ST.init(h);
 	}
-	const std::vector<int> get_h(void) const { return h; }
-	const std::vector<int> get_sa(void) const { return sa; }
-	const std::vector<int> get_rnk(void) const { return rnk; }
+	const std::vector<int> &get_h(void) const { return h; }
+	const std::vector<int> &get_sa(void) const { return sa; }
+	const std::vector<int> &get_rnk(void) const { return rnk; }
 	inline int lcp(int i, int j) { // 0-indexed
 		if (i < 0 || j < 0 || i >= n || j >= n) return 0;
 		if (i == j) return n - i;

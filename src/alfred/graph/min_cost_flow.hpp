@@ -2,6 +2,7 @@
 #define AFGR_MIN_COST_MAXFLOW
 
 #include <algorithm>
+#include <cassert>
 #include <limits>
 #include <queue>
 #include <utility>
@@ -22,7 +23,7 @@ struct MCMF_SPFA {
 	std::vector<bool> in_queue;
 	std::vector<std::vector<int>> G;
 	MCMF_SPFA(void) {}
-	MCMF_SPFA(int n, int m = 0) { init(n, m); }
+	explicit MCMF_SPFA(int n, int m = 0) { init(n, m); }
 	inline void init(int n, int m = 0) {
 		this->n = ++n;
 		G.assign(n, {});
@@ -110,7 +111,7 @@ struct MCMF_Dijkstra {
 	std::vector<bool> vis;
 	std::vector<std::vector<int>> G;
 	MCMF_Dijkstra(void) {}
-	MCMF_Dijkstra(int n, int m = 0) { init(n, m); }
+	explicit MCMF_Dijkstra(int n, int m = 0) { init(n, m); }
 	inline void init(int n, int m = 0) {
 		this->n = ++n;
 		G.assign(n, {});
@@ -151,6 +152,7 @@ struct MCMF_Dijkstra {
 		return dis[t] != std::numeric_limits<Cost>::max();
 	}
 	inline std::pair<Cap, Cost> maxflow(int s, int t) {
+		assert(init_potentials(s));
 		Cap flow = 0;
 		Cost cost = 0;
 		while (dijkstra(s, t)) {
@@ -171,6 +173,38 @@ struct MCMF_Dijkstra {
 			flow += f;
 		}
 		return {flow, cost};
+	}
+
+	inline bool init_potentials(int s) {
+		const Cost inf = std::numeric_limits<Cost>::max();
+		std::fill(pot.begin(), pot.end(), inf);
+		std::vector<int> count(n, 0);
+		std::vector<char> in_queue(n, 0);
+		std::queue<int> queue;
+		pot[s] = 0;
+		queue.push(s);
+		in_queue[s] = 1;
+		while (!queue.empty()) {
+			int u = queue.front();
+			queue.pop();
+			in_queue[u] = 0;
+			for (int i : G[u]) {
+				auto &[v, c, w] = e[i];
+				if (c <= 0 || pot[u] == inf) continue;
+				if (pot[v] > pot[u] + w) {
+					pot[v] = pot[u] + w;
+					if (!in_queue[v]) {
+						if (++count[v] >= n) return false;
+						in_queue[v] = 1;
+						queue.push(v);
+					}
+				}
+			}
+		}
+		for (int i = 0; i < n; i++) {
+			if (pot[i] == inf) pot[i] = 0;
+		}
+		return true;
 	}
 
 	struct Edge {

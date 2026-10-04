@@ -10,6 +10,9 @@
 #define AFMT_FLAT_GEOMETRY_EPS 1e-9
 #endif
 
+// TODO(alfred): replace this local epsilon with the geometry-owned constants
+// after the computational geometry module is rewritten.
+
 // Helper to handle floating point comparisons safely
 template <class T>
 constexpr int sgn(T x, double eps = AFMT_FLAT_GEOMETRY_EPS) {
@@ -23,7 +26,7 @@ constexpr int sgn(T x, double eps = AFMT_FLAT_GEOMETRY_EPS) {
 template <class T>
 struct Vec {
 	T x, y;
-	constexpr Vec(T _x = 0, T _y = 0) : x(_x), y(_y) {}
+	explicit constexpr Vec(T _x = 0, T _y = 0) : x(_x), y(_y) {}
 
 	constexpr T norm2() const { return x * x + y * y; }
 	inline double norm() const {
@@ -120,7 +123,7 @@ struct PolarAngleComparator {
 	Point<T> o;
 	Vec<T> base;
 
-	PolarAngleComparator(
+	explicit PolarAngleComparator(
 	    const Point<T> &o = Point<T>(0, 0), const Vec<T> &base = Vec<T>(1, 0)
 	)
 	    : o(o), base(base) {}
@@ -145,7 +148,7 @@ struct PolarAngleComparator {
 template <class T>
 struct Line {
 	Point<T> a, b;
-	Line() {}
+	Line() : a(), b() {}
 	Line(Point<T> a, Point<T> b) : a(a), b(b) {}
 	Vec<T> dir() const { return b - a; }
 };

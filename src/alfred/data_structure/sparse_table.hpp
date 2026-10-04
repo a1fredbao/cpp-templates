@@ -7,19 +7,29 @@
 template <class T>
 class SparseTable {
 private:
-	int n;
+	int n = 0;
 	std::vector<std::vector<T>> ST;
 
 public:
 	SparseTable(void) {}
-	SparseTable(int N) : n(N), ST(N, std::vector<T>(std::__lg(N) + 1)) {}
+	explicit SparseTable(int N) {
+		if (N > 0) {
+			n = N;
+			ST.assign(N, std::vector<T>(std::__lg(N) + 1));
+		}
+	}
 	template <class InitT>
-	SparseTable(std::vector<InitT> &_init) : SparseTable(_init.size()) {
+	explicit SparseTable(std::vector<InitT> &_init)
+	    : SparseTable(_init.size()) {
 		init(_init, true);
 	}
 	template <class InitT>
 	inline void init(std::vector<InitT> &_init, bool internal = false) {
 		if (!internal) {
+			if (_init.empty()) {
+				n = 0, ST.clear();
+				return;
+			}
 			n = _init.size();
 			ST.assign(n, std::vector<T>(std::__lg(n) + 1));
 		}
@@ -30,13 +40,14 @@ public:
 			}
 		}
 	}
+	// Requires: T::operator+ is idempotent, e.g. min/max/gcd.
 	inline T query(int l, int r) { // 0 based
-		if (l > r) return T();
+		if (l < 0 || r >= n || l > r) return T();
 		int w = std::__lg(r - l + 1);
 		return ST[l][w] + ST[r - (1 << w) + 1][w];
 	}
 	inline T disjoint_query(int l, int r) {
-		if (l > r) return T();
+		if (l < 0 || r >= n || l > r) return T();
 		T ans = T();
 		for (int i = std::__lg(r - l + 1); i >= 0; i--) {
 			if ((1 << i) <= r - l + 1) {

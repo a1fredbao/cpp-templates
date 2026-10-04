@@ -82,9 +82,11 @@ public:
 		return montgomery_detail::r_mod(M);
 	}
 
-	value_type v;
-
 	constexpr ModInt() noexcept : v(0) {}
+	ModInt(const ModInt &) = default;
+	ModInt(ModInt &&) = default;
+	ModInt &operator=(const ModInt &) = default;
+	ModInt &operator=(ModInt &&) = default;
 
 	template <
 	    class T, std::enable_if_t<
@@ -241,6 +243,7 @@ public:
 	}
 
 private:
+	value_type v;
 	static constexpr value_type mont_inv = montgomery_detail::inv_mod_pow2(M);
 	static constexpr value_type mont_r2 = montgomery_detail::r2_mod(M);
 
@@ -302,9 +305,11 @@ public:
 
 	static value_type montgomery_one() noexcept { return one_; }
 
-	value_type v;
-
 	DynamicModInt() noexcept : v(0) {}
+	DynamicModInt(const DynamicModInt &) = default;
+	DynamicModInt(DynamicModInt &&) = default;
+	DynamicModInt &operator=(const DynamicModInt &) = default;
+	DynamicModInt &operator=(DynamicModInt &&) = default;
 
 	template <
 	    class T, std::enable_if_t<
@@ -462,6 +467,7 @@ public:
 	}
 
 private:
+	value_type v;
 	static inline value_type mod_ = 998244353u;
 	static inline value_type inv_ = montgomery_detail::inv_mod_pow2(998244353u);
 	static inline value_type r2_ = montgomery_detail::r2_mod(998244353u);

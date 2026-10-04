@@ -1,3 +1,3 @@
 # Data Structure
 
-Static, dynamic, persistent, and amortized data structures.
+Fenwick trees, sparse tables, DSU variants, binary tries, and dynamic trees.

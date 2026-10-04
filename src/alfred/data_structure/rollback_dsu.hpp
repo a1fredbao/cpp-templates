@@ -10,7 +10,7 @@ private:
 
 public:
 	CancelDSU(void) = default;
-	CancelDSU(int n) : fa(n + 1), siz(n + 1, 1) {
+	explicit CancelDSU(int n) : fa(n + 1), siz(n + 1, 1) {
 		std::iota(fa.begin(), fa.end(), 0);
 	}
 	inline void init(int n) {

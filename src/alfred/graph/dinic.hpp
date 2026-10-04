@@ -17,7 +17,7 @@ struct MaxFlow {
 	std::vector<int> dep, cur;
 	std::vector<std::vector<int>> G;
 	MaxFlow(void) {}
-	MaxFlow(int n, int m = 0) { init(n, m); }
+	explicit MaxFlow(int n, int m = 0) { init(n, m); }
 	inline void init(int n, int m = 0) {
 		this->n = ++n, G.assign(n, {});
 		dep.resize(n), e.reserve(2 * m);
@@ -33,16 +33,16 @@ struct MaxFlow {
 		dep.assign(n, -1);
 		dep[s] = 0, Q.push(s);
 		while (!Q.empty()) {
-			s = Q.front(), Q.pop();
-			if (s == t) return true;
-			for (auto &i : G[s]) {
+			int u = Q.front();
+			Q.pop();
+			for (auto &i : G[u]) {
 				auto &[v, c] = e[i];
 				if (c > 0 && dep[v] == -1) {
-					dep[v] = dep[s] + 1, Q.push(v);
+					dep[v] = dep[u] + 1, Q.push(v);
 				}
 			}
 		}
-		return false;
+		return dep[t] != -1;
 	}
 	T dfs(int u, int t, T f) {
 		if (u == t) {

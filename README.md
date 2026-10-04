@@ -17,7 +17,7 @@ thirdparty/     Jiangly and Watashi reference material
 The library is organized by problem domain:
 
 ```text
-src/alfred/core/             types, constants, random, IO, bit helpers
+src/alfred/core/             types, random, IO helpers
 src/alfred/algorithm/        general algorithms
 src/alfred/data_structure/   static, dynamic, persistent structures
 src/alfred/graph/            connectivity, flows, matchings

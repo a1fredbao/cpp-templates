@@ -2,12 +2,6 @@ contents:
   - name: Fenwick
     codes:
       - fenwick.hpp
-  - name: Segment Tree
-    codes:
-      - segment_tree.hpp
-  - name: Lazy Segment Tree
-    codes:
-      - lazy_segment_tree.hpp
   - name: Sparse Table
     codes:
       - sparse_table.hpp
@@ -20,12 +14,6 @@ contents:
   - name: Rollback DSU
     codes:
       - rollback_dsu.hpp
-  - name: Segment Tree Merge
-    codes:
-      - segment_tree_merge.hpp
-  - name: Persistent Segment Tree
-    codes:
-      - persistent_segment_tree.hpp
   - name: Binary Trie
     codes:
       - binary_trie.hpp

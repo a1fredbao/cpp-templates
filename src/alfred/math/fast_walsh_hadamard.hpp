@@ -1,12 +1,17 @@
 #pragma once
 
-#include "../core/bit.hpp"
 #include "modint.hpp"
 #include <algorithm>
 #include <cstdint>
 #include <vector>
 
 namespace fwt_detail {
+inline int next_power_of_two(int x) {
+	int result = 1;
+	while (result < x) result <<= 1;
+	return result;
+}
+
 template <class T>
 inline void fmt_and(std::vector<T> &a, T c) {
 	const int n = a.size();
@@ -84,7 +89,8 @@ inline void ifwt(std::vector<T> &a) {
 
 template <class T>
 inline std::vector<T> and_conv(std::vector<T> f, std::vector<T> g) {
-	int len = ceil_pow2(std::max(f.size(), g.size()));
+	if (f.empty() || g.empty()) return {};
+	int len = fwt_detail::next_power_of_two(std::max(f.size(), g.size()));
 	f.resize(len), fwt_detail::fmt_and(f, T(1));
 	g.resize(len), fwt_detail::fmt_and(g, T(1));
 	for (int i = 0; i < len; i++) f[i] *= g[i];
@@ -93,7 +99,8 @@ inline std::vector<T> and_conv(std::vector<T> f, std::vector<T> g) {
 
 template <class T>
 inline std::vector<T> or_conv(std::vector<T> f, std::vector<T> g) {
-	int len = ceil_pow2(std::max(f.size(), g.size()));
+	if (f.empty() || g.empty()) return {};
+	int len = fwt_detail::next_power_of_two(std::max(f.size(), g.size()));
 	f.resize(len), fwt_detail::fmt_or(f, T(1));
 	g.resize(len), fwt_detail::fmt_or(g, T(1));
 	for (int i = 0; i < len; i++) f[i] *= g[i];
@@ -103,7 +110,8 @@ inline std::vector<T> or_conv(std::vector<T> f, std::vector<T> g) {
 template <uint32_t mod>
 inline std::vector<ModInt<mod>>
 xor_conv(std::vector<ModInt<mod>> f, std::vector<ModInt<mod>> g) {
-	int len = ceil_pow2(std::max(f.size(), g.size()));
+	if (f.empty() || g.empty()) return {};
+	int len = fwt_detail::next_power_of_two(std::max(f.size(), g.size()));
 	f.resize(len), fwt_detail::fwt(f, ModInt<mod>(1));
 	g.resize(len), fwt_detail::fwt(g, ModInt<mod>(1));
 	for (int i = 0; i < len; i++) f[i] *= g[i];
@@ -112,7 +120,8 @@ xor_conv(std::vector<ModInt<mod>> f, std::vector<ModInt<mod>> g) {
 
 template <class T>
 inline std::vector<T> xor_conv(std::vector<T> f, std::vector<T> g) {
-	int len = ceil_pow2(std::max(f.size(), g.size()));
+	if (f.empty() || g.empty()) return {};
+	int len = fwt_detail::next_power_of_two(std::max(f.size(), g.size()));
 	f.resize(len), fwt_detail::fwt(f);
 	g.resize(len), fwt_detail::fwt(g);
 	for (int i = 0; i < len; i++) f[i] *= g[i];

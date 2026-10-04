@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <initializer_list>
 #include <string>
 #include <utility>
@@ -70,7 +71,7 @@ inline i128 isqrt<i128>(i128 x) {
 	return isqrt<u128>(static_cast<u128>(x));
 }
 
-inline i128 abs(i128 x) { return x < 0 ? -x : x; }
+inline i128 abs128(i128 x) { return x < 0 ? -x : x; }
 
 template <class T>
 inline T ceil_div(T n, T m) {
