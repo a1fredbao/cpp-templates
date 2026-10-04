@@ -1,3 +1,3 @@
-exclude: ["thirdparty/**", "verify/**"]
+exclude: ["thirdparty/**"]
 title: Alfred's CP Library
 theme: jekyll-theme-hacker
