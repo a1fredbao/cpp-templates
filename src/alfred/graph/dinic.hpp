@@ -37,13 +37,17 @@ struct MaxFlow {
 			if (s == t) return true;
 			for (auto &i : G[s]) {
 				auto &[v, c] = e[i];
-				if (c > 0 && dep[v] == -1) { dep[v] = dep[s] + 1, Q.push(v); }
+				if (c > 0 && dep[v] == -1) {
+					dep[v] = dep[s] + 1, Q.push(v);
+				}
 			}
 		}
 		return false;
 	}
 	T dfs(int u, int t, T f) {
-		if (u == t) { return f; }
+		if (u == t) {
+			return f;
+		}
 		T r = f;
 		for (int &i = cur[u]; i < int(G[u].size()); ++i) {
 			const int j = G[u][i];
@@ -51,7 +55,9 @@ struct MaxFlow {
 			if (c > 0 && dep[v] == dep[u] + 1) {
 				T a = dfs(v, t, std::min(r, c));
 				e[j].cap -= a, e[j ^ 1].cap += a, r -= a;
-				if (r == 0) { return f; }
+				if (r == 0) {
+					return f;
+				}
 			}
 		}
 		return f - r;

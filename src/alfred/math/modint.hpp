@@ -50,7 +50,9 @@ public:
 	}
 	constexpr ModInt pow(int64_t n) const noexcept {
 		ModInt res = 1, x = *this;
-		if (n < 0) { n = (-n) % (M - 1) * (M - 2); }
+		if (n < 0) {
+			n = (-n) % (M - 1) * (M - 2);
+		}
 		while (n > 0) {
 			if (n & 1) res *= x;
 			x *= x, n >>= 1;
@@ -206,7 +208,9 @@ constexpr mint findPrimitiveRoot(void) {
 	const int P = mint::mod();
 	int k = __builtin_ctz(P - 1);
 	while (true) {
-		if (i.pow((P - 1) / 2) != 1) { break; }
+		if (i.pow((P - 1) / 2) != 1) {
+			break;
+		}
 		i += 1;
 	}
 	return i.pow((P - 1) >> k);

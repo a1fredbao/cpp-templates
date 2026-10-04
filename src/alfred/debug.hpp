@@ -119,7 +119,9 @@ void print_range(std::ostream &os, It first, It last) {
 	os << '[';
 	bool started = false;
 	for (; first != last; ++first) {
-		if (started) { os << ", "; }
+		if (started) {
+			os << ", ";
+		}
 		started = true;
 		print_value(os, *first);
 	}
@@ -192,7 +194,9 @@ void print_value(std::ostream &os, const std::map<K, V, Cmp, Alloc> &value) {
 	os << '{';
 	bool started = false;
 	for (const auto &[key, val] : value) {
-		if (started) { os << ", "; }
+		if (started) {
+			os << ", ";
+		}
 		started = true;
 		print_value(os, key);
 		os << ": ";
@@ -208,7 +212,9 @@ void print_value(
 	os << '{';
 	bool started = false;
 	for (const auto &[key, val] : value) {
-		if (started) { os << ", "; }
+		if (started) {
+			os << ", ";
+		}
 		started = true;
 		print_value(os, key);
 		os << ": ";
@@ -230,7 +236,9 @@ template <class T>
 void print_value(std::ostream &os, const std::vector<bool> &value) {
 	os << '[';
 	for (std::size_t i = 0; i < value.size(); ++i) {
-		if (i) { os << ", "; }
+		if (i) {
+			os << ", ";
+		}
 		os << (value[i] ? '1' : '0');
 	}
 	os << ']';
@@ -245,7 +253,9 @@ template <class... Ts>
 void print_values(std::ostream &os, const Ts &...values) {
 	std::size_t index = 0;
 	auto emit = [&](const auto &value) {
-		if (index++ != 0) { os << ", "; }
+		if (index++ != 0) {
+			os << ", ";
+		}
 		print_value(os, value);
 	};
 	(emit(values), ...);

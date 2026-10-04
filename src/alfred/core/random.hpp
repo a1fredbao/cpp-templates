@@ -47,6 +47,8 @@ template <class T>
 std::vector<T> rand_seq(size_t n, size_t seed = 20090913) {
 	std::vector<T> res(n);
 	std::mt19937_64 rng(seed);
-	for (size_t i = 0; i < n; i++) { res[i] = rng(); }
+	for (size_t i = 0; i < n; i++) {
+		res[i] = rng();
+	}
 	return res;
 }

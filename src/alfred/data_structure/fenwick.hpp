@@ -13,7 +13,9 @@ struct Fenwick {
 	inline int lowbit(int x) { return x & -x; }
 	inline void update(int pos, T x) {
 		if (++pos >= n) return;
-		for (; pos < n; pos += lowbit(pos)) { c[pos] += x; }
+		for (; pos < n; pos += lowbit(pos)) {
+			c[pos] += x;
+		}
 	}
 	inline void clear(void) {
 		for (auto &x : c) x = T();
@@ -21,7 +23,9 @@ struct Fenwick {
 	inline T query(int pos) {
 		T ans = T();
 		if (++pos >= n) pos = n - 1;
-		for (; pos; pos ^= lowbit(pos)) { ans += c[pos]; }
+		for (; pos; pos ^= lowbit(pos)) {
+			ans += c[pos];
+		}
 		return ans;
 	}
 	inline T query(int l, int r) { return query(r) - query(l - 1); }

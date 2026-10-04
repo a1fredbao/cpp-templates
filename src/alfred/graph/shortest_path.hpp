@@ -21,7 +21,9 @@ public:
 	Graph(int n) : G(n + 1) {}
 	Graph(int n, std::vector<int> _G[]) : G(n + 1) {
 		for (int i = 0; i <= n; i++) {
-			for (auto &j : _G[i]) { add_directed(i, j); }
+			for (auto &j : _G[i]) {
+				add_directed(i, j);
+			}
 		}
 	}
 	inline void clear(void) { G.clear(); }

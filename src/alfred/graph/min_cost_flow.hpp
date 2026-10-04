@@ -52,7 +52,9 @@ struct MCMF_SPFA {
 					dis[v] = dis[u] + w;
 					pre[v] = u;
 					pre_edge[v] = i;
-					if (!in_queue[v]) { in_queue[v] = true, Q.push(v); }
+					if (!in_queue[v]) {
+						in_queue[v] = true, Q.push(v);
+					}
 				}
 			}
 		}

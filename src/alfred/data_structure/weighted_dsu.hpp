@@ -26,7 +26,9 @@ struct WeightedDSU {
 	// Returns true if this operation has no conflict, false otherwise.
 	inline bool merge(int x, int y, T v) {
 		int fx = find(x), fy = find(y);
-		if (fx == fy) { return w[x] + v == w[y]; }
+		if (fx == fy) {
+			return w[x] + v == w[y];
+		}
 		w[fy] = w[x] + v - w[y], fa[fy] = fx;
 		return true;
 	}

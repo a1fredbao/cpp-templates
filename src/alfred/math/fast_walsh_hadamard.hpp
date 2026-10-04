@@ -13,7 +13,9 @@ inline void fmt_and(std::vector<T> &a, T c) {
 	for (int d = 2; d <= n; d *= 2) {
 		const int len = d >> 1;
 		for (int i = 0; i < n; i += d) {
-			for (int j = 0; j < len; j++) { a[i + j] += c * a[i + j + len]; }
+			for (int j = 0; j < len; j++) {
+				a[i + j] += c * a[i + j + len];
+			}
 		}
 	}
 }
@@ -24,7 +26,9 @@ inline void fmt_or(std::vector<T> &a, T c) {
 	for (int d = 2; d <= n; d *= 2) {
 		const int len = d >> 1;
 		for (int i = 0; i < n; i += d) {
-			for (int j = 0; j < len; j++) { a[i + j + len] += c * a[i + j]; }
+			for (int j = 0; j < len; j++) {
+				a[i + j + len] += c * a[i + j];
+			}
 		}
 	}
 }

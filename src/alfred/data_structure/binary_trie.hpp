@@ -70,7 +70,9 @@ struct BinaryTrie { // 01-Trie
 		uint64_t val = 0;
 		for (int i = BITS - 1; i >= 0; i--) {
 			int go_bit = word >> i & 1;
-			if (tr[node].child[go_bit] == -1) { go_bit ^= 1; }
+			if (tr[node].child[go_bit] == -1) {
+				go_bit ^= 1;
+			}
 			val |= 1ull << go_bit;
 			node = tr[node].child[go_bit];
 		}
@@ -83,7 +85,9 @@ struct BinaryTrie { // 01-Trie
 		uint64_t val = 0;
 		for (int i = BITS - 1; i >= 0; i--) {
 			int go_bit = (word >> i & 1) ^ 1;
-			if (tr[node].child[go_bit] == -1) { go_bit ^= 1; }
+			if (tr[node].child[go_bit] == -1) {
+				go_bit ^= 1;
+			}
 			val |= 1ull << go_bit;
 			node = tr[node].child[go_bit];
 		}

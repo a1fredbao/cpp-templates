@@ -15,7 +15,9 @@ constexpr std::size_t POOL_SIZE = sizeof(MOD_POOL) / sizeof(int);
 // 简单的编译时字符串哈希（BKDR）
 constexpr uint32_t ct_str_hash(const char *s) {
 	uint32_t h = 0;
-	for (; *s; ++s) { h = h * 131u + static_cast<uint8_t>(*s); }
+	for (; *s; ++s) {
+		h = h * 131u + static_cast<uint8_t>(*s);
+	}
 	return h;
 }
 

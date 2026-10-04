@@ -14,7 +14,9 @@ struct Matrix {
 	Matrix(int n, int m, T val = T()) : M(n, std::vector<T>(m, val)) {}
 	// Generate a diagonal matrix.
 	Matrix(std::vector<T> diag) : M(diag.size(), std::vector<T>(diag.size())) {
-		for (size_t i = 0; i < diag.size(); i++) { M[i][i] = diag[i]; }
+		for (size_t i = 0; i < diag.size(); i++) {
+			M[i][i] = diag[i];
+		}
 	}
 	// Generate a unit matrix.
 	Matrix(int n) : M(n, std::vector<T>(n)) {
@@ -96,7 +98,9 @@ Matrix<T> operator*(Matrix<T> A, Matrix<T> B) {
 	for (size_t i = 0; i < A.n(); i++) {
 		for (size_t k = 0; k < A.m(); k++) {
 			const T &Aik = A[i][k];
-			for (size_t j = 0; j < B.m(); j++) { ans[i][j] += Aik * B[k][j]; }
+			for (size_t j = 0; j < B.m(); j++) {
+				ans[i][j] += Aik * B[k][j];
+			}
 		}
 	}
 	return ans;
@@ -107,7 +111,9 @@ std::vector<T> operator*(Matrix<T> A, std::vector<T> B) {
 	assert(A.m() == B.size());
 	std::vector<T> ans(A.n());
 	for (size_t i = 0; i < A.n(); i++) {
-		for (size_t j = 0; j < A.m(); j++) { ans[i] += A[i][j] * B[j]; }
+		for (size_t j = 0; j < A.m(); j++) {
+			ans[i] += A[i][j] * B[j];
+		}
 	}
 	return ans;
 }
@@ -146,11 +152,15 @@ struct XORBasis {
 		return -1;
 	}
 	inline T max(T ans = 0) {
-		for (int i = C - 1; i >= 0; i--) { ans = std::max(ans, ans ^ p[i]); }
+		for (int i = C - 1; i >= 0; i--) {
+			ans = std::max(ans, ans ^ p[i]);
+		}
 		return ans;
 	}
 	inline T min(T ans) {
-		for (int i = C - 1; i >= 0; i--) { ans = std::min(ans, ans ^ p[i]); }
+		for (int i = C - 1; i >= 0; i--) {
+			ans = std::min(ans, ans ^ p[i]);
+		}
 		return ans;
 	}
 	inline int size(void) { return siz; }

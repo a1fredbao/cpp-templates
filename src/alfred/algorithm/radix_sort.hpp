@@ -16,7 +16,9 @@
 template <class T, const unsigned w = 4>
 static void radix_sort(T a[], const size_t n) {
 	static std::vector<T> b_vec;
-	if (b_vec.size() < n) { b_vec.resize(n); }
+	if (b_vec.size() < n) {
+		b_vec.resize(n);
+	}
 	T *b = b_vec.data();
 	static unsigned bucket[1 << w];
 	const unsigned tot = sizeof(T) * 8;

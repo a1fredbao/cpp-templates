@@ -59,24 +59,32 @@ inline std::vector<int> sa_is(const std::vector<int> &s, int upper) {
 		sa[buf[s[n - 1]]++] = n - 1;
 		for (int i = 0; i < n; i++) {
 			int v = sa[i];
-			if (v >= 1 && !ls[v - 1]) { sa[buf[s[v - 1]]++] = v - 1; }
+			if (v >= 1 && !ls[v - 1]) {
+				sa[buf[s[v - 1]]++] = v - 1;
+			}
 		}
 		std::copy(sum_l.begin(), sum_l.end(), buf.begin());
 		for (int i = n - 1; i >= 0; i--) {
 			int v = sa[i];
-			if (v >= 1 && ls[v - 1]) { sa[--buf[s[v - 1] + 1]] = v - 1; }
+			if (v >= 1 && ls[v - 1]) {
+				sa[--buf[s[v - 1] + 1]] = v - 1;
+			}
 		}
 	};
 
 	std::vector<int> lms_map(n + 1, -1);
 	int m = 0;
 	for (int i = 1; i < n; i++) {
-		if (!ls[i - 1] && ls[i]) { lms_map[i] = m++; }
+		if (!ls[i - 1] && ls[i]) {
+			lms_map[i] = m++;
+		}
 	}
 	std::vector<int> lms;
 	lms.reserve(m);
 	for (int i = 1; i < n; i++) {
-		if (!ls[i - 1] && ls[i]) { lms.push_back(i); }
+		if (!ls[i - 1] && ls[i]) {
+			lms.push_back(i);
+		}
 	}
 
 	induce(lms);
@@ -99,7 +107,9 @@ inline std::vector<int> sa_is(const std::vector<int> &s, int upper) {
 				same = false;
 			} else {
 				while (l < end_l) {
-					if (s[l] != s[r]) { break; }
+					if (s[l] != s[r]) {
+						break;
+					}
 					l++;
 					r++;
 				}
@@ -111,7 +121,9 @@ inline std::vector<int> sa_is(const std::vector<int> &s, int upper) {
 
 		auto rec_sa = sa_is(rec_s, rec_upper + 1);
 
-		for (int i = 0; i < m; i++) { sorted_lms[i] = lms[rec_sa[i]]; }
+		for (int i = 0; i < m; i++) {
+			sorted_lms[i] = lms[rec_sa[i]];
+		}
 		induce(sorted_lms);
 	}
 	return sa;
@@ -120,7 +132,9 @@ inline std::vector<int> sa_is(const std::vector<int> &s, int upper) {
 inline std::vector<int> suffix_array(const std::string &s) {
 	int n = int(s.size());
 	std::vector<int> s2(n);
-	for (int i = 0; i < n; i++) { s2[i] = (unsigned char)s[i]; }
+	for (int i = 0; i < n; i++) {
+		s2[i] = (unsigned char)s[i];
+	}
 	return sa_is(s2, 256);
 }
 } // namespace sa_is_impl
@@ -137,13 +151,17 @@ public:
 		if (n == 0) return;
 		sa = sa_is_impl::suffix_array(s);
 		rnk.assign(n, 0);
-		for (int i = 0; i < n; i++) { rnk[sa[i]] = i; }
+		for (int i = 0; i < n; i++) {
+			rnk[sa[i]] = i;
+		}
 		h.assign(n, 0);
 		for (int i = 0, k = 0; i < n; i++) {
 			if (rnk[i] == 0) continue;
 			if (k != 0) k--;
 			int j = sa[rnk[i] - 1];
-			while (i + k < n && j + k < n && s[i + k] == s[j + k]) { k++; }
+			while (i + k < n && j + k < n && s[i + k] == s[j + k]) {
+				k++;
+			}
 			h[rnk[i]] = k;
 		}
 		ST.init(h);

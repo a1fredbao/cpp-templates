@@ -50,11 +50,15 @@ template <uint32_t mod>
 inline std::vector<ModInt<mod>>
 add_conv(std::vector<ModInt<mod>> f, std::vector<ModInt<mod>> g) {
 	if (f.empty() || g.empty()) return {};
-	if (f.size() < g.size()) { std::swap(f, g); }
+	if (f.size() < g.size()) {
+		std::swap(f, g);
+	}
 	if (g.size() < 128) {
 		std::vector<ModInt<mod>> h(f.size() + g.size() - 1);
 		for (size_t i = 0; i < f.size(); i++) {
-			for (size_t j = 0; j < g.size(); j++) { h[i + j] += f[i] * g[j]; }
+			for (size_t j = 0; j < g.size(); j++) {
+				h[i + j] += f[i] * g[j];
+			}
 		}
 		return h;
 	}
@@ -65,7 +69,9 @@ add_conv(std::vector<ModInt<mod>> f, std::vector<ModInt<mod>> g) {
 	const auto &rev = polynomial_detail::get_rev(lim);
 	polynomial_detail::NTT(f, rev, lim, 1);
 	polynomial_detail::NTT(g, rev, lim, 1);
-	for (int i = 0; i < lim; i++) { f[i] *= g[i]; }
+	for (int i = 0; i < lim; i++) {
+		f[i] *= g[i];
+	}
 	polynomial_detail::NTT(f, rev, lim, -1);
 	f.resize(len);
 	return f;

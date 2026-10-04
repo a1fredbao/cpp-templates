@@ -62,7 +62,9 @@ struct TwoSAT {
 	inline bool has_solution(void) {
 		int var = G.size() / 2;
 		for (int i = 0; i < var; i++) {
-			if (bel[i << 1] == bel[i << 1 | 1]) { return false; }
+			if (bel[i << 1] == bel[i << 1 | 1]) {
+				return false;
+			}
 		}
 		return true;
 	}
