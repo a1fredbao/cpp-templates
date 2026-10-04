@@ -1,4 +1,5 @@
 #pragma once
+
 // Calculate $\sum_{i = 0}^{n - 1} \lfloor \frac{ai + b}{m} \rfloor$ in
 // $O(\min\{a, m, n\})$
 unsigned long long floor_sum_unsigned(

@@ -16,3 +16,5 @@ inline void write_vec(std::vector<T> vec, bool in_line = false) {
 	}
 	std::cout << '\n';
 }
+
+// TODO: fast io.

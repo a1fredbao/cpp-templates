@@ -13,14 +13,8 @@ private:
 public:
 	Mess(void) = default;
 	explicit Mess(std::vector<_Tp> a) : v(a) { init(); }
-	inline _Tp origin(int idx) {
-		assert(idx >= 1 && idx <= int(v.size()));
-		return v[idx - 1];
-	}
-	inline void insert(_Tp x) {
-		v.push_back(x);
-		initialized = false;
-	}
+	inline _Tp origin(int idx) { return v[idx - 1]; }
+	inline void insert(_Tp x) { v.push_back(x); }
 	template <typename T, typename... V>
 	inline void insert(T x, V... v) {
 		insert(x), insert(v...);

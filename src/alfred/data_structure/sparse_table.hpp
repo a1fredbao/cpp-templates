@@ -11,10 +11,7 @@ private:
 public:
 	SparseTable(void) {}
 	explicit SparseTable(int N) {
-		if (N > 0) {
-			n = N;
-			ST.assign(N, std::vector<T>(std::__lg(N) + 1));
-		}
+		n = N, ST.assign(N, std::vector<T>(std::__lg(N) + 1));
 	}
 	template <class InitT>
 	explicit SparseTable(std::vector<InitT> &_init)
