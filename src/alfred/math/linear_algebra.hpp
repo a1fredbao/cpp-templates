@@ -2,28 +2,37 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <initializer_list>
 #include <limits>
+#include <utility>
 #include <vector>
 
 template <class T>
-struct Matrix {
-	std::vector<std::vector<T>> M;
-	explicit Matrix(std::vector<std::vector<T>> _M) : M(_M) {}
-	explicit Matrix(int n, int m, T val = T()) : M(n, std::vector<T>(m, val)) {}
+class Matrix : public std::vector<std::vector<T>> {
+public:
+	using Base = std::vector<std::vector<T>>;
+	using Base::operator[];
+
+	Matrix() = default;
+	explicit Matrix(const Base &base) : Base(base) {}
+	explicit Matrix(Base &&base) : Base(std::move(base)) {}
+	explicit Matrix(int n, int m, T val = T())
+	    : Base(n, std::vector<T>(m, val)) {}
 	// Generate a diagonal matrix.
 	explicit Matrix(std::vector<T> diag)
-	    : M(diag.size(), std::vector<T>(diag.size())) {
+	    : Base(diag.size(), std::vector<T>(diag.size())) {
 		for (size_t i = 0; i < diag.size(); i++) {
-			M[i][i] = diag[i];
+			(*this)[i][i] = diag[i];
 		}
 	}
 	// Generate a unit matrix.
-	explicit Matrix(int n) : M(n, std::vector<T>(n)) {
-		for (int i = 0; i < n; i++) M[i][i] = 1;
+	explicit Matrix(int n) : Base(n, std::vector<T>(n)) {
+		for (int i = 0; i < n; i++) (*this)[i][i] = 1;
 	}
-	inline std::vector<T> &operator[](int n) { return M[n]; }
-	inline size_t n(void) { return M.size(); }
-	inline size_t m(void) { return M.empty() ? 0 : M[0].size(); }
+	explicit Matrix(std::initializer_list<std::vector<T>> rows) : Base(rows) {}
+
+	size_t n() const { return this->size(); }
+	size_t m() const { return this->empty() ? 0 : this->front().size(); }
 };
 
 template <class T>
@@ -54,12 +63,12 @@ std::vector<T> operator*(Matrix<T> A, std::vector<T> B) {
 }
 
 template <class T>
-Matrix<T> power(Matrix<T> M, long long index) {
-	assert(M.n() == M.m());
-	Matrix<T> ans(M.n());
+Matrix<T> power(Matrix<T> base, long long index) {
+	assert(base.n() == base.m());
+	Matrix<T> ans(base.n());
 	while (index) {
-		if (index & 1) ans = ans * M;
-		index >>= 1, M = M * M;
+		if (index & 1) ans = ans * base;
+		index >>= 1, base = base * base;
 	}
 	return ans;
 }
