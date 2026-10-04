@@ -12,7 +12,9 @@ int main(int argc, char const *argv[]) {
 	MaxFlow<int> flow(l + r + 1, m + l + r);
 
 	for (int i = 1; i <= l; i++) flow.add(0, i, 1);
-	for (int i = 1; i <= r; i++) { flow.add(l + i, l + r + 1, 1); }
+	for (int i = 1; i <= r; i++) {
+		flow.add(l + i, l + r + 1, 1);
+	}
 
 	while (m--) {
 		std::cin >> u >> v;

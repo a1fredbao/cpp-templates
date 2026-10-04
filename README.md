@@ -22,7 +22,7 @@ src/alfred/algorithm/        general algorithms
 src/alfred/data_structure/   static, dynamic, persistent structures
 src/alfred/graph/            connectivity, flows, matchings
 src/alfred/math/             number theory, algebra, transforms
-src/alfred/math/polynomial/  NTT and formal power series
+src/alfred/math/poly.hpp      polynomial and formal power series
 src/alfred/string/           hashing and string structures
 src/alfred/geometry/         point, convexity, and intersection algorithms
 ```

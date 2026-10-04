@@ -24,4 +24,5 @@ contents:
     codes:
       - fast_walsh_hadamard.hpp
   - name: Polynomial
-    directory: polynomial
+    codes:
+      - poly.hpp

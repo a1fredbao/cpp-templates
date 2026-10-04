@@ -32,6 +32,8 @@ inline void solve(void) {
 
 int main(int argc, char const *argv[]) {
 	optimizeIO();
-	while (std::cin >> S >> T) { solve(); }
+	while (std::cin >> S >> T) {
+		solve();
+	}
 	return 0;
 }

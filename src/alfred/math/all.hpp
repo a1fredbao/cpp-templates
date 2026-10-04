@@ -9,5 +9,5 @@
 #include "matrix_tree.hpp"
 #include "modint.hpp"
 #include "number_theory.hpp"
-#include "polynomial/all.hpp"
+#include "poly.hpp"
 #include "prime.hpp"

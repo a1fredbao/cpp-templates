@@ -11,7 +11,7 @@ uses umbrella headers for convenient submission and printing.
   balanced trees, and dynamic trees.
 - `graph/`: SCC, EBCC, max flow, min-cost flow, matching, shortest paths.
 - `math/`: number theory, combinatorics, linear algebra, and transforms.
-- `math/polynomial/`: NTT and formal power series operations.
+- `math/poly.hpp`: polynomial and formal power series operations.
 - `string/`: hashing, KMP, Z, suffix array, automata, and Lyndon tools.
 - `geometry/`: 2D and 3D geometry.
 
