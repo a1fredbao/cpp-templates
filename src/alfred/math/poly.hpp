@@ -78,7 +78,7 @@ struct Poly : std::vector<mint> {
 	}
 	Poly trunc(int k) const { return pre(k); }
 
-	Poly shift(int k) const {
+	Poly shift(int k) const { // shift right if k > 0, left if k < 0
 		Poly r = *this;
 		if (k >= 0) r.insert(r.begin(), k, mint(0));
 		else r.erase(r.begin(), r.begin() + std::min(-k, n()));
