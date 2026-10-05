@@ -1,5 +1,7 @@
 # Alfred XCPC Templates
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/a1fredbao/cpp-templates)
+
 A contest-oriented C++ template library. The library body, verification
 suite, and PDF tooling are intentionally separated.
 
