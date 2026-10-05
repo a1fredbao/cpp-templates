@@ -86,10 +86,10 @@ int main() {
 	for (int i = 2; i < 20; i++) {
 		sequence[i] = sequence[i - 1] + sequence[i - 2];
 	}
-	PolyType recurrence = PolyType::berlekampMassey(sequence);
+	PolyType recurrence = PolyType::berlekamp_massey(sequence);
 	PolyType p{0, 1};
 	PolyType q{1, -1, -1};
 	for (int i = 0; i < 20; i++) {
-		assert(PolyType::linearRecurrence(p, q, i) == sequence[i]);
+		assert(PolyType::linear_recurrence(p, q, i) == sequence[i]);
 	}
 }
