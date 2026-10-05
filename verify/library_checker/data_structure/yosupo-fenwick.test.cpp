@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/point_add_range_sum
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/point_add_range_sum
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/data_structure/fenwick.hpp"

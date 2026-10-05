@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/exp_of_formal_power_series
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/exp_of_formal_power_series
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/math/poly.hpp"

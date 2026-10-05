@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_5_D
+// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_5_D
 
 #include "../../../src/alfred/algorithm/pair_counting.hpp"
 #include "../../../src/alfred/core/io.hpp"

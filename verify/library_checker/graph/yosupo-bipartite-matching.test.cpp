@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/bipartitematching
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/bipartitematching
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/graph/bipartite_matching.hpp"

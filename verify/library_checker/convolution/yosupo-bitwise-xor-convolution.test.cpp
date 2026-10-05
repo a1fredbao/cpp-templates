@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/bitwise_xor_convolution
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/bitwise_xor_convolution
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/math/fast_walsh_hadamard.hpp"

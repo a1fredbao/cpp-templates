@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/unionfind_with_potential
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/unionfind_with_potential
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/data_structure/weighted_dsu.hpp"

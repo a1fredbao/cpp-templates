@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/polynomial_interpolation
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/polynomial_interpolation
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/math/poly.hpp"

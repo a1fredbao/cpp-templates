@@ -12,3 +12,6 @@ library directory.
 
 Each test file must start with a `competitive-verifier: PROBLEM` comment or
 clearly state why no external problem exists.
+
+The problem URL must remain on the first line. The repository `.clang-format`
+sets `ReflowComments: false` so clang-format does not split URL comments.

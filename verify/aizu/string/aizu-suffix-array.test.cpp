@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0528
+// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0528
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/string/suffix_array.hpp"

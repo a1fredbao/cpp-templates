@@ -1,5 +1,4 @@
-// competitive-verifier: PROBLEM
-// https://judge.yosupo.jp/problem/multipoint_evaluation
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/multipoint_evaluation
 
 #include "../../../src/alfred/core/io.hpp"
 #include "../../../src/alfred/math/poly.hpp"
