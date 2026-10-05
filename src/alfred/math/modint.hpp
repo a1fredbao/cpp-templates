@@ -11,11 +11,13 @@ struct ModInt {
 	using u32 = uint32_t;
 	using u64 = uint64_t;
 	using i32 = int32_t;
-	static_assert(M < (1u << 30) && (M & 1), "M must be odd and below 2^30");
+	static_assert(1 < M && M < (1u << 31), "M must be in [2, 2^31)");
 
 	static constexpr u32 calc_r() {
 		u32 r = M;
-		for (int i = 0; i < 4; i++) r *= 2 - M * r;
+		for (int i = 0; i < 4; i++) {
+			r *= 2 - M * r;
+		}
 		return r;
 	}
 	static constexpr u32 R = calc_r();
@@ -24,7 +26,7 @@ struct ModInt {
 	u32 a;
 	constexpr ModInt() : a(0) {}
 	template <class T>
-	constexpr ModInt(T x) : a(red(u64(norm(x)) * N2)) {}
+	constexpr ModInt(T x) : a(enc(norm(x))) {}
 
 	template <class T>
 	static constexpr u32 norm(T x) {
@@ -41,9 +43,27 @@ struct ModInt {
 	static constexpr u32 red(u64 b) {
 		return (b + u64(u32(b) * u32(-R)) * M) >> 32;
 	}
+	static constexpr u32 enc(u32 x) {
+		if constexpr (M & 1) {
+			return red(u64(x) * N2);
+		} else {
+			return x;
+		}
+	}
+	static constexpr u32 mul(u32 x, u32 y) {
+		if constexpr (M & 1) {
+			return red(u64(x) * y);
+		} else {
+			return u64(x) * y % M;
+		}
+	}
 	constexpr u32 val() const {
-		u32 x = red(a);
-		return x >= M ? x - M : x;
+		if constexpr (M & 1) {
+			u32 x = red(a);
+			return x >= M ? x - M : x;
+		} else {
+			return a;
+		}
 	}
 	static constexpr u32 mod() { return M; }
 
@@ -56,8 +76,7 @@ struct ModInt {
 		return *this;
 	}
 	constexpr ModInt &operator*=(const ModInt &b) {
-		a = red(u64(a) * b.a);
-		return *this;
+		return a = mul(a, b.a), *this;
 	}
 	constexpr ModInt &operator/=(const ModInt &b) { return *this *= b.inv(); }
 	friend constexpr ModInt operator+(ModInt a, const ModInt &b) {
@@ -90,9 +109,21 @@ struct ModInt {
 		}
 		return r;
 	}
-	constexpr ModInt inv() const { return pow(M - 2); }
+	static constexpr u32 inv_mod(u32 x) {
+		int64_t a = x, b = M, u = 1, v = 0;
+		while (b) {
+			int64_t t = a / b;
+			a -= t * b, u -= t * v;
+			std::swap(a, b), std::swap(u, v);
+		}
+		assert(a == 1);
+		return u32((u % M + M) % M);
+	}
+	// We may just use power(M - 2) in practice when M is prime.
+	constexpr ModInt inv() const { return inv_mod(val()); }
 
 	static constexpr ModInt primitive_root() {
+		static_assert(M & 1, "primitive_root requires odd modulus");
 		if constexpr (M == 998244353u) {
 			return 3;
 		} else if constexpr (M == 1000000007u) {
@@ -126,8 +157,13 @@ struct DynamicModInt {
 		return r;
 	}
 	static void set_mod(u32 m) {
-		assert(m < (1u << 30) && (m & 1));
-		M = m, R = calc_r(m), N2 = -u64(m) % m;
+		assert(1 < m && m < (1u << 31));
+		M = m;
+		if (M & 1) {
+			R = calc_r(m), N2 = -u64(m) % m;
+		} else {
+			R = N2 = 0;
+		}
 	}
 	struct Init {
 		Init() { set_mod(M); }
@@ -137,7 +173,7 @@ struct DynamicModInt {
 	u32 a;
 	DynamicModInt() : a(0) {}
 	template <class T>
-	DynamicModInt(T x) : a(red(u64(norm(x)) * N2)) {}
+	DynamicModInt(T x) : a(enc(norm(x))) {}
 
 	template <class T>
 	static u32 norm(T x) {
@@ -152,9 +188,17 @@ struct DynamicModInt {
 	}
 
 	static u32 red(u64 b) { return (b + u64(u32(b) * u32(-R)) * M) >> 32; }
+	static u32 enc(u32 x) { return (M & 1) ? red(u64(x) * N2) : x; }
+	static u32 mul(u32 x, u32 y) {
+		return (M & 1) ? red(u64(x) * y) : u32(u64(x) * y % M);
+	}
 	u32 val() const {
-		u32 x = red(a);
-		return x >= M ? x - M : x;
+		if (M & 1) {
+			u32 x = red(a);
+			return x >= M ? x - M : x;
+		} else {
+			return a;
+		}
 	}
 	static u32 mod() { return M; }
 
@@ -167,7 +211,7 @@ struct DynamicModInt {
 		return *this;
 	}
 	DynamicModInt &operator*=(const DynamicModInt &b) {
-		a = red(u64(a) * b.a);
+		a = mul(a, b.a);
 		return *this;
 	}
 	DynamicModInt &operator/=(const DynamicModInt &b) {
@@ -210,6 +254,7 @@ struct DynamicModInt {
 	}
 
 	static DynamicModInt primitive_root() {
+		assert(M & 1);
 		if (M == 998244353u) return 3;
 		if (M == 1000000007u) return 5;
 		DynamicModInt r = 2;
