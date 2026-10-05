@@ -1,3 +1,5 @@
-exclude: ["thirdparty/**"]
+exclude:
+  - "thirdparty/**"
+  - "**/all.hpp"
 title: Alfred's CP Library
 theme: jekyll-theme-hacker
