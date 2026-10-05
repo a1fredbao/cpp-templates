@@ -17,14 +17,7 @@ public:
 			flow.add(L + v + 1, t, 1);
 		}
 	}
-
-	inline void add_edge(int u, int v) {
-		assert(!solved);
-		assert(0 <= u && u < L);
-		assert(0 <= v && v < R);
-		flow.add(u + 1, L + v + 1, 1);
-	}
-
+	inline void add_edge(int u, int v) { flow.add(u + 1, L + v + 1, 1); }
 	inline int max_matching(void) {
 		if (!solved) {
 			siz = flow.maxflow(0, t);
@@ -32,7 +25,6 @@ public:
 		}
 		return siz;
 	}
-
 	std::vector<std::pair<int, int>> matching(void) {
 		max_matching();
 		std::vector<std::pair<int, int>> res;

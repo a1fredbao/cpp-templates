@@ -26,35 +26,28 @@ public:
 		}
 		n = m;
 	}
-	// assert(0 <= m && m < int(mint::mod()));
 	inline mint fac(int m) {
 		if (m > n) init(m);
 		return _fac[m];
 	}
-	// assert(0 <= m && m < int(mint::mod()));
 	inline mint invfac(int m) {
 		if (m > n) init(m);
 		return _invfac[m];
 	}
-	// assert(0 <= m && m < int(mint::mod()));
 	inline mint inv(int m) {
 		if (m < 0) return -inv(-m);
 		if (m > n) init(m);
 		return _inv[m];
 	}
-	// assert(n < int(mint::mod()) && "use Lucas for n >= mod");
-	inline mint binom(int n, int m) {
+	inline mint binom(int n, int m) { // use Lucas for n >= mod
 		if (n < m || m < 0) return 0;
 		return fac(n) * invfac(m) * invfac(n - m);
 	}
-	// assert(n < int(mint::mod()) && "use Lucas for n >= mod");
-	inline mint ibinom(int n, int m) {
+	inline mint ibinom(int n, int m) { // use Lucas for n >= mod
 		if (n < m || m < 0) return 0;
-		assert(n < int(mint::mod()) && "use Lucas for n >= mod");
 		return invfac(n) * fac(m) * fac(n - m);
 	}
-	// assert(n < int(mint::mod()) && "use Lucas for n >= mod");
-	inline mint perm(int n, int m) {
+	inline mint perm(int n, int m) { // use Lucas for n >= mod
 		if (n < m || m < 0) return 0;
 		return fac(n) * invfac(n - m);
 	}
