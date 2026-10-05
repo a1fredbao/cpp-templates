@@ -4,15 +4,14 @@
 #include <cassert>
 #include <cstdint>
 #include <numeric>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
-#include "../core/types.hpp"
+namespace nt {
 
 using u64 = uint64_t;
 using u128 = __uint128_t;
-
-namespace nt {
 
 inline u64 mul(u64 a, u64 b, u64 m) { return u128(a) * b % m; }
 
@@ -24,30 +23,38 @@ inline u64 pw(u64 a, u64 b, u64 m) {
 	return r;
 }
 
-inline bool isp(u64 n) {
-	if (n < 2) return false;
-	for (u64 p :
-	     {2ull, 3ull, 5ull, 7ull, 11ull, 13ull, 17ull, 19ull, 23ull, 29ull,
-	      31ull, 37ull}) {
-		if (n % p == 0) return n == p;
+} // namespace nt
+
+template <class T>
+inline bool is_prime(T n) {
+	static_assert(
+	    std::is_integral_v<T> && sizeof(T) <= 8,
+	    "is_prime supports integral types up to 64 bits"
+	);
+	if constexpr (std::is_signed_v<T>) {
+		if (n < 0) return false;
 	}
-	u64 d = n - 1;
-	int s = 0;
-	for (; ~d & 1; d >>= 1) s++;
-	for (u64 a :
+
+	uint64_t x = n;
+	if (x < 2) return false;
+	if (~x & 1) return x == 2;
+	uint64_t d = x - 1;
+	int s = __builtin_ctzll(d);
+	for (uint64_t a :
 	     {2ull, 325ull, 9375ull, 28178ull, 450775ull, 9780504ull,
 	      1795265022ull}) {
-		if (a % n == 0) continue;
-		u64 x = pw(a % n, d, n);
-		if (x == 1 || x == n - 1) continue;
-		for (int i = 1; i < s; i++) {
-			x = mul(x, x, n);
-			if (x == n - 1) break;
+		if (a % x == 0) continue;
+		uint64_t y = nt::pw(a % x, d, x);
+		if (y == 1 || y == x - 1) continue;
+		for (int i = 1; i < s && y != x - 1; i++) {
+			y = nt::mul(y, y, x);
 		}
-		if (x != n - 1) return false;
+		if (y != x - 1) return false;
 	}
 	return true;
 }
+
+namespace nt {
 
 inline u64 rho(u64 n) {
 	if (~n & 1) return 2;
@@ -65,7 +72,7 @@ inline u64 rho(u64 n) {
 
 inline void fac(u64 n, std::vector<std::pair<u64, int>> &v) {
 	if (n == 1) return;
-	if (isp(n)) {
+	if (::is_prime(n)) {
 		v.push_back({n, 1});
 		return;
 	}
@@ -74,22 +81,6 @@ inline void fac(u64 n, std::vector<std::pair<u64, int>> &v) {
 }
 
 } // namespace nt
-
-template <class T>
-bool is_prime(T n) {
-	static_assert(is_integral<T>::value, "integral type required");
-	if constexpr (is_signed_int<T>::value) {
-		if (n < 0) return false;
-	}
-	if (n < 2) return false;
-	if constexpr (sizeof(T) <= 8) {
-		return nt::isp(static_cast<u64>(n));
-	}
-	for (T d = 2; d <= n / d; d++) {
-		if (n % d == 0) return false;
-	}
-	return true;
-}
 
 inline std::pair<std::vector<int>, std::vector<int>> euler_sieve(int n) {
 	std::vector<int> p, lp(n + 1);
@@ -106,39 +97,30 @@ inline std::pair<std::vector<int>, std::vector<int>> euler_sieve(int n) {
 
 template <class T>
 std::vector<std::pair<T, int>> factorize(T n) {
-	static_assert(is_integral<T>::value, "integral type required");
-	if constexpr (is_signed_int<T>::value) {
+	static_assert(
+	    std::is_integral_v<T> && sizeof(T) <= 8,
+	    "factorize supports integral types up to 64 bits"
+	);
+	if constexpr (std::is_signed_v<T>) {
 		assert(n >= 0);
 	}
 	std::vector<std::pair<T, int>> res;
 	if (n < 2) return res;
-	if constexpr (sizeof(T) <= 8) {
-		std::vector<std::pair<u64, int>> v;
-		nt::fac(static_cast<u64>(n), v);
-		std::sort(v.begin(), v.end());
-		for (auto [p, e] : v) {
-			if (!res.empty() && res.back().first == static_cast<T>(p)) {
-				res.back().second += e;
-			} else {
-				res.push_back({static_cast<T>(p), e});
-			}
+	std::vector<std::pair<nt::u64, int>> v;
+	nt::fac(static_cast<nt::u64>(n), v);
+	std::sort(v.begin(), v.end());
+	for (auto &[p, e] : v) {
+		if (!res.empty() && res.back().first == static_cast<T>(p)) {
+			res.back().second += e;
+		} else {
+			res.push_back({static_cast<T>(p), e});
 		}
-	} else {
-		for (T d = 2; d <= n / d; d++) {
-			if (n % d) continue;
-			int e = 0;
-			for (; n % d == 0; n /= d) e++;
-			res.push_back({d, e});
-		}
-		if (n != 1) res.push_back({n, 1});
 	}
 	return res;
 }
 
 template <class T>
 inline T phi(T n) {
-	for (auto [p, e] : factorize(n)) {
-		n = n / p * (p - 1);
-	}
+	for (auto [p, e] : factorize(n)) n = n / p * (p - 1);
 	return n;
 }
