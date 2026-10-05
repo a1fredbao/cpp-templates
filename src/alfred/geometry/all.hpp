@@ -1,10 +1,12 @@
 #pragma once
 
-#include "../core/all.hpp"
-
-#include "convex_hull.hpp"
-#include "half_plane_intersection.hpp"
-#include "minimum_enclosing_circle.hpp"
-#include "minkowski.hpp"
+// Convenience aggregate header.  Every module header is self-contained, so
+// include only the header you need when copying a single template to a
+// contest submission.
+#include "circle.hpp"
+#include "config.hpp"
+#include "convex.hpp"
+#include "halfplane.hpp"
+#include "line.hpp"
 #include "point.hpp"
-#include "rotating_calipers.hpp"
+#include "polygon.hpp"

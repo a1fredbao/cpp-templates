@@ -1,7 +1,7 @@
 // competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/static_convex_hull
 
 #include "../../../src/alfred/core/io.hpp"
-#include "../../../src/alfred/geometry/convex_hull.hpp"
+#include "../../../src/alfred/geometry/convex.hpp"
 #include <iostream>
 
 int main(int argc, char const *argv[]) {

@@ -33,12 +33,7 @@ Never compare floating-point quantities directly with `==`, `<`, or `>`. Route a
 
 ```cpp
 template <typename T>
-T eps = 1e-9;
-
-template <> inline constexpr double eps<double> = 1e-9;
-template <> inline constexpr long double eps<long double> = 1e-12;
-template <> inline constexpr int eps<int> = 0;
-template <> inline constexpr long long eps<long long> = 0;
+inline T eps = T(1e-9); // writable: e.g. eps<long double> = 1e-12;
 
 template <typename T>
 constexpr int sgn(T x) {
@@ -90,8 +85,9 @@ Avoid `std::atan2` when coordinates are integers. Divide points by half-planes (
 template <class T>
 int quad(const Point<T> &p) {
     if (p.x == 0 && p.y == 0) return 0;
-    if (p.y > 0 || (p.y == 0 && p.x > 0)) return 1; // Upper half-plane
-    return -1;                                     // Lower half-plane
+    if (p.y < 0) return -1;
+    if (p.y == 0 && p.x >= 0) return 0; // Positive x-axis and the origin
+    return 1;                           // Upper half-plane and negative x-axis
 }
 
 template <class T>

@@ -1,19 +1,22 @@
 contents:
+  - name: Configuration
+    codes:
+      - config.hpp
   - name: Point
     codes:
       - point.hpp
-  - name: Convex Hull
+  - name: Line
     codes:
-      - convex_hull.hpp
-  - name: Rotating Calipers
+      - line.hpp
+  - name: Polygon
     codes:
-      - rotating_calipers.hpp
-  - name: Half-Plane Intersection
+      - polygon.hpp
+  - name: Convex
     codes:
-      - half_plane_intersection.hpp
-  - name: Minkowski Sum
+      - convex.hpp
+  - name: Half-Plane
     codes:
-      - minkowski.hpp
-  - name: Minimum Enclosing Circle
+      - halfplane.hpp
+  - name: Circle
     codes:
-      - minimum_enclosing_circle.hpp
+      - circle.hpp
