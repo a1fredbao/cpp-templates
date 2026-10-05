@@ -249,7 +249,7 @@ struct Poly : std::vector<mint> {
 		return solve(1, 0, n);
 	}
 
-	static Poly berlekampMassey(const Poly &s) {
+	static Poly berlekamp_massey(const Poly &s) {
 		Poly c, old;
 		int f = -1;
 		for (int i = 0; i < s.n(); i++) {
@@ -275,7 +275,7 @@ struct Poly : std::vector<mint> {
 		return c;
 	}
 
-	static mint linearRecurrence(Poly p, Poly q, int64_t n) {
+	static mint linear_recurrence(Poly p, Poly q, int64_t n) {
 		int m = q.n() - 1;
 		for (; n; n >>= 1) {
 			Poly nq = q;
