@@ -26,7 +26,7 @@ inline u64 pw(u64 a, u64 b, u64 m) {
 } // namespace nt
 
 template <class T>
-inline bool is_prime(T n) {
+inline constexpr bool is_prime(T n) {
 	static_assert(
 	    std::is_integral_v<T> && sizeof(T) <= 8,
 	    "is_prime supports integral types up to 64 bits"
