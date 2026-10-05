@@ -163,8 +163,9 @@ struct Poly : std::vector<mint> {
 		if (!n()) return true;
 		int i = 0;
 		for (; i < n() && at(i) == 0; i++);
+		if (i == n()) return true;
 		if (i & 1) return false;
-		return i == n() || at(i).pow((mint::mod() - 1) / 2) == 1;
+		return at(i).pow((mint::mod() - 1) / 2) == 1;
 	}
 	Poly sqrt(int m) const {
 		if (m == 0) return {};
