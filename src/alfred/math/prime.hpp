@@ -40,6 +40,7 @@ inline bool is_prime(T n) {
 	if (~x & 1) return x == 2;
 	uint64_t d = x - 1;
 	int s = __builtin_ctzll(d);
+	d >>= s;
 	for (uint64_t a :
 	     {2ull, 325ull, 9375ull, 28178ull, 450775ull, 9780504ull,
 	      1795265022ull}) {
