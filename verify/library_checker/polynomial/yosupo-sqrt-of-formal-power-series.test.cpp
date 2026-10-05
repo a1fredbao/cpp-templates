@@ -9,6 +9,10 @@ int main() {
 	optimizeIO(), std::cin >> n;
 	Poly<m998> a(n);
 	for (auto &x : a) std::cin >> x;
+	if (!a.has_sqrt()) {
+		std::cout << "-1\n";
+		return 0;
+	}
 	auto result = a.sqrt(n);
 	for (auto x : result) std::cout << x << ' ';
 	return 0;

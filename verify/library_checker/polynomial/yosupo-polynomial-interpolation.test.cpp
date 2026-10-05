@@ -8,7 +8,8 @@ int main() {
 	int n;
 	optimizeIO(), std::cin >> n;
 	std::vector<m998> x(n), y(n);
-	for (int i = 0; i < n; i++) std::cin >> x[i] >> y[i];
+	for (auto &value : x) std::cin >> value;
+	for (auto &value : y) std::cin >> value;
 	auto result = Poly<m998>::interpolate(x, y);
 	for (auto value : result) std::cout << value << ' ';
 	return 0;

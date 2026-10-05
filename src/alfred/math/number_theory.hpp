@@ -1,7 +1,9 @@
 #pragma once
+#include <algorithm>
 #include <array>
 #include <bitset>
 #include <cmath>
+#include <cstdint>
 #if __cplusplus >= 201103L
 #include <utility>
 #else
@@ -65,4 +67,26 @@ public:
 template <class T>
 inline T gcd(T a, T b) {
 	return b == 0 ? a : gcd(b, a % b);
+}
+
+// Requires: mint::mod() is an odd prime.
+template <class mint>
+mint mod_sqrt(mint a) {
+	using u64 = uint64_t;
+	uint32_t p = mint::mod();
+	if (a == 0) return 0;
+	if (a.pow((p - 1) / 2) != 1) return -1;
+	u64 q = p - 1, s = 0;
+	for (; ~q & 1; q >>= 1) s++;
+	mint z = 2;
+	for (; z.pow((p - 1) / 2) == 1;) z += 1;
+	mint c = z.pow(q), x = a.pow((q + 1) / 2), t = a.pow(q);
+	for (u64 m = s; t != 1;) {
+		u64 i = 1;
+		mint u = t * t;
+		for (; u != 1; u *= u) i++;
+		mint b = c.pow(u64(1) << (m - i - 1));
+		x *= b, c = b * b, t *= c, m = i;
+	}
+	return std::min(x.val(), p - x.val());
 }

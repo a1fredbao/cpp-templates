@@ -1,6 +1,7 @@
 #pragma once
 
 #include "modint.hpp"
+#include "number_theory.hpp"
 #include <algorithm>
 #include <cassert>
 #include <cstdint>
@@ -158,13 +159,25 @@ struct Poly : std::vector<mint> {
 		return ((f.log(m - i * k) * mint(k)).exp(m - i * k).shift(i * k) * c)
 		    .pre(m);
 	}
+	bool has_sqrt() const {
+		if (!n()) return true;
+		int i = 0;
+		for (; i < n() && at(i) == 0; i++);
+		if (i & 1) return false;
+		return i == n() || at(i).pow((mint::mod() - 1) / 2) == 1;
+	}
 	Poly sqrt(int m) const {
 		if (m == 0) return {};
-		Poly f = pre(m), g{1};
+		if (!n()) return Poly(m);
+		int low = 0;
+		for (; low < n() && at(low) == 0; low++);
+		if ((low & 1) || low >= m) return Poly(m);
+		Poly f(this->begin() + low, this->end());
+		Poly g{mod_sqrt(f[0])};
 		for (int i = 1; i < m; i *= 2) {
 			g = (g + f.pre(2 * i) * g.inv(2 * i)) / mint(2);
 		}
-		return g.pre(m);
+		return g.pre(m - low / 2).shift(low / 2);
 	}
 
 	Poly mulT(Poly b) const {
