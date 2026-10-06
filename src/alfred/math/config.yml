@@ -1,4 +1,7 @@
 contents:
+  - name: Batch Inverse
+    codes:
+      - batch_inv.hpp
   - name: ModInt
     codes:
       - modint.hpp
@@ -23,3 +26,9 @@ contents:
   - name: Polynomial
     codes:
       - poly.hpp
+  - name: Lagrange
+    codes:
+      - lagrange.hpp
+  - name: Speed of Light Power
+    codes:
+      - speed_of_light_power.hpp

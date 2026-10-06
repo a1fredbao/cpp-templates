@@ -13,9 +13,9 @@ namespace nt {
 using u64 = uint64_t;
 using u128 = __uint128_t;
 
-inline u64 mul(u64 a, u64 b, u64 m) { return u128(a) * b % m; }
+constexpr u64 mul(u64 a, u64 b, u64 m) { return u128(a) * b % m; }
 
-inline u64 pw(u64 a, u64 b, u64 m) {
+constexpr u64 pw(u64 a, u64 b, u64 m) {
 	u64 r = 1;
 	for (; b; b >>= 1, a = mul(a, a, m)) {
 		if (b & 1) r = mul(r, a, m);

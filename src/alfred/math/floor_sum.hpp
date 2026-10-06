@@ -2,7 +2,7 @@
 
 // Calculate $\sum_{i = 0}^{n - 1} \lfloor \frac{ai + b}{m} \rfloor$ in
 // $O(\min\{a, m, n\})$
-unsigned long long floor_sum_unsigned(
+inline unsigned long long floor_sum_unsigned(
     unsigned long long a, unsigned long long b, unsigned long long m,
     unsigned long long n
 ) {
@@ -16,7 +16,7 @@ unsigned long long floor_sum_unsigned(
 
 // Calculate $\sum_{i = 0}^{n - 1} \lfloor \frac{ai + b}{m} \rfloor$ in
 // $O(\min\{a, m, n\})$
-long long floor_sum(long long a, long long b, long long m, long long n) {
+inline long long floor_sum(long long a, long long b, long long m, long long n) {
 	unsigned long long ans = 0;
 	if (a < 0) {
 		unsigned long long a2 = (a % m + m) % m;

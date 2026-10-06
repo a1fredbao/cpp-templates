@@ -8,6 +8,9 @@ contents:
   - name: IO
     codes:
       - io.hpp
+  - name: Fast IO
+    codes:
+      - fast_io.hpp
   - name: Utils
     codes:
       - utils.hpp
