@@ -1,13 +1,7 @@
 contents:
-  - name: Types
-    codes:
-      - types.hpp
   - name: Random
     codes:
       - random.hpp
-  - name: IO
-    codes:
-      - io.hpp
   - name: Fast IO
     codes:
       - fast_io.hpp

@@ -1,10 +1,4 @@
 contents:
-  - name: Pair Counting
-    codes:
-      - pair_counting.hpp
   - name: Radix Sort
     codes:
       - radix_sort.hpp
-  - name: Discretization
-    codes:
-      - discretization.hpp

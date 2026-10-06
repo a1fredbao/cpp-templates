@@ -2,39 +2,15 @@ contents:
   - name: HashMap
     codes:
       - hashmap.hpp
-  - name: Fenwick
-    codes:
-      - fenwick.hpp
-  - name: Sparse Table
-    codes:
-      - sparse_table.hpp
-  - name: DSU
-    codes:
-      - dsu.hpp
-  - name: Weighted DSU
-    codes:
-      - weighted_dsu.hpp
-  - name: Rollback DSU
-    codes:
-      - rollback_dsu.hpp
-  - name: Binary Trie
-    codes:
-      - binary_trie.hpp
   - name: Cartesian Tree
     codes:
       - cartesian.hpp
   - name: Chtholly Tree
     codes:
       - chtholly.hpp
-  - name: Priority Set
-    codes:
-      - priority_set.hpp
   - name: Binary Alarm
     codes:
       - binary_alarm.hpp
-  - name: Appear Statistics
-    codes:
-      - appear_statistics.hpp
   - name: Link-Cut Tree
     codes:
       - link_cut_tree.hpp
