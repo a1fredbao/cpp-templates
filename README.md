@@ -11,6 +11,7 @@ suite, and PDF tooling are intentionally separated.
 src/alfred/     C++ library body
 verify/         Library Checker, AOJ, and standalone verification
 tools/pdf/      PDF generator, manifests, and LaTeX templates
+tools/install/  Installation and uninstallation scripts
 thirdparty/     Jiangly and Watashi reference material
 ```
 
@@ -57,6 +58,18 @@ python main.py --preset both --output-dir build
 ```
 
 See `tools/pdf/README.md` for custom config and manifest regeneration.
+
+## Installation and uninstallation
+
+The installation script is located under `tools/install/`:
+
+```sh
+python tools/install/install.py --install                   # Installs to ~/.xcpc by default
+python tools/install/install.py --install --path /usr/local # Installs to /usr/local
+
+python tools/install/install.py --uninstall                 # Uninstalls from ~/.xcpc by default
+python tools/install/install.py --uninstall --path /usr/local # Uninstalls from /usr/local
+```
 
 ## Third-party references
 
