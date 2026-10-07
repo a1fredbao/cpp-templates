@@ -275,6 +275,7 @@ struct Poly : std::vector<mint> {
 		return c;
 	}
 
+	// find [x^n](P(x) / Q(x))
 	static mint linear_recurrence(Poly p, Poly q, int64_t n) {
 		int m = q.n() - 1;
 		for (; n; n >>= 1) {
