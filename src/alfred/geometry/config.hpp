@@ -1,10 +1,26 @@
 #pragma once
 
 #include <cmath>
+#include <iostream>
 #include <type_traits>
 
 template <class T>
 struct Point;
+
+#if defined(__SIZEOF_FLOAT128__) || defined(__FLT128_MANT_DIG__)
+
+using f128 = __float128;
+std::istream &operator>>(std::istream &is, f128 &p) {
+	long double x;
+	is >> x;
+	p = static_cast<f128>(x);
+	return is;
+}
+std::ostream &operator<<(std::ostream &os, const f128 &p) {
+	return os << static_cast<long double>(p);
+}
+
+#endif
 
 // Declaration needed by polar_cmp before point.hpp defines Point.
 template <class T>

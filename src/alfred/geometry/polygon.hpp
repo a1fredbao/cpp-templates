@@ -19,8 +19,8 @@ template <class T>
 scalar_t<T> area(const Polygon<T> &p) {
 	using R = scalar_t<T>;
 	R s = 0;
-	for (int i = 0, n = p.size(); i < n; i++) {
-		s += cross(p[i], p[(i + 1) % n]);
+	for (int i = 1, n = p.size(); i + 1 < n; i++) {
+		s += cross(p[i] - p[0], p[i + 1] - p[0]);
 	}
 	return s;
 }
