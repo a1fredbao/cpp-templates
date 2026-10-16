@@ -5,9 +5,15 @@
 #include <limits>
 #include <type_traits>
 
+#if !defined(AF_HAS_FLOAT128)
 #if defined(__SIZEOF_FLOAT128__) || defined(__FLT128_MANT_DIG__)
-
 #define AF_HAS_FLOAT128 1
+#else
+#define AF_HAS_FLOAT128 0
+#endif
+#endif
+
+#if AF_HAS_FLOAT128
 
 using f128 = __float128;
 
@@ -101,9 +107,5 @@ inline std::istream &operator>>(std::istream &is, f128 &p) {
 inline std::ostream &operator<<(std::ostream &os, const f128 &p) {
 	return os << static_cast<long double>(p);
 }
-
-#else
-
-#define AF_HAS_FLOAT128 0
 
 #endif

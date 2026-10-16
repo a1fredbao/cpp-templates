@@ -11,19 +11,25 @@
 
 using geometry_float = calc_t<long long>;
 
-static bool close(long double a, long double b, long double tol = 1e-8) {
-	return std::abs(a - b) <=
-	       tol * std::max<long double>({1, std::abs(a), std::abs(b)});
+static bool close(
+    geometry_float a, geometry_float b,
+    geometry_float tol = static_cast<geometry_float>(1e-8)
+) {
+	geometry_float diff = std::abs(a - b);
+	geometry_float scale = std::max<geometry_float>({
+	    static_cast<geometry_float>(1), std::abs(a), std::abs(b)
+	});
+	return diff <= tol * scale;
 }
 
-static long double brute_rectangle_area(const Polygon<long long> &p) {
-	long double ans = 1e100;
+static geometry_float brute_rectangle_area(const Polygon<long long> &p) {
+	geometry_float ans = 1e100;
 	for (int i = 0, n = p.size(); i < n; i++) {
-		Point<long double> u = normalize(p[(i + 1) % n] - p[i]);
-		Point<long double> v = rotate_90(u);
-		long double lox = 1e100, hix = -1e100, loy = 1e100, hiy = -1e100;
+		Point<geometry_float> u = normalize(p[(i + 1) % n] - p[i]);
+		Point<geometry_float> v = rotate_90(u);
+		geometry_float lox = 1e100, hix = -1e100, loy = 1e100, hiy = -1e100;
 		for (const auto &q : p) {
-			Point<long double> x(q);
+			Point<geometry_float> x(q);
 			lox = std::min(lox, dot(x, u));
 			hix = std::max(hix, dot(x, u));
 			loy = std::min(loy, dot(x, v));
@@ -34,14 +40,14 @@ static long double brute_rectangle_area(const Polygon<long long> &p) {
 	return ans;
 }
 
-static long double brute_rectangle_perimeter(const Polygon<long long> &p) {
-	long double ans = 1e100;
+static geometry_float brute_rectangle_perimeter(const Polygon<long long> &p) {
+	geometry_float ans = 1e100;
 	for (int i = 0, n = p.size(); i < n; i++) {
-		Point<long double> u = normalize(p[(i + 1) % n] - p[i]);
-		Point<long double> v = rotate_90(u);
-		long double lox = 1e100, hix = -1e100, loy = 1e100, hiy = -1e100;
+		Point<geometry_float> u = normalize(p[(i + 1) % n] - p[i]);
+		Point<geometry_float> v = rotate_90(u);
+		geometry_float lox = 1e100, hix = -1e100, loy = 1e100, hiy = -1e100;
 		for (const auto &q : p) {
-			Point<long double> x(q);
+			Point<geometry_float> x(q);
 			lox = std::min(lox, dot(x, u));
 			hix = std::max(hix, dot(x, u));
 			loy = std::min(loy, dot(x, v));
@@ -52,24 +58,29 @@ static long double brute_rectangle_perimeter(const Polygon<long long> &p) {
 	return ans;
 }
 
-static long double brute_diameter(const Polygon<long long> &p) {
-	long double ans = 0;
+static geometry_float brute_diameter(const Polygon<long long> &p) {
+	geometry_float ans = 0;
 	for (int i = 0; i < int(p.size()); i++) {
 		for (int j = i + 1; j < int(p.size()); j++) {
-			ans = std::max(ans, std::sqrt((long double)square(p[i] - p[j])));
+			auto squared = static_cast<geometry_float>(
+			    square(p[i] - p[j])
+			);
+			ans = std::max(ans, std::sqrt(squared));
 		}
 	}
 	return ans;
 }
 
-static long double brute_triangle_area(const Polygon<long long> &p) {
-	long double ans = 0;
+static geometry_float brute_triangle_area(const Polygon<long long> &p) {
+	geometry_float ans = 0;
 	for (int i = 0; i < int(p.size()); i++) {
 		for (int j = i + 1; j < int(p.size()); j++) {
 			for (int k = j + 1; k < int(p.size()); k++) {
 				auto c = cross(p[i], p[j], p[k]);
 				if (c < 0) c = -c;
-				ans = std::max(ans, (long double)c / 2);
+				ans = std::max(
+				    ans, static_cast<geometry_float>(c) / 2
+				);
 			}
 		}
 	}
@@ -165,7 +176,7 @@ int main() {
 	assert(point_in_convex(Point<long long>(0, 1), hull) == 2);
 
 	auto [diameter, da, db] = convex_diameter(hull);
-	assert(close(diameter, std::sqrt(8.0L)));
+	assert(close(diameter, std::sqrt(static_cast<geometry_float>(8))));
 	assert(square(da - db) == 8);
 
 	auto rect = min_bounding_rectangle(hull);
@@ -266,7 +277,10 @@ int main() {
 	);
 	assert(two_circles.size() == 2);
 	assert(close(two_circles[0].x, 0.5));
-	assert(close(std::abs(two_circles[0].y), std::sqrt(3.0L) / 2));
+	assert(close(
+	    std::abs(two_circles[0].y),
+	    std::sqrt(static_cast<geometry_float>(3)) / 2
+	));
 	assert(tangent_points(Point<long long>(2, 0), unit).size() == 2);
 
 	Polygon<long long> circle_points{
@@ -278,7 +292,7 @@ int main() {
 	Circle<geometry_float> cover =
 	    minimum_enclosing_circle(circle_points);
 	assert(close(cover.p.x, 1) && close(cover.p.y, 1));
-	assert(close(cover.r, std::sqrt(2.0L)));
+	assert(close(cover.r, std::sqrt(static_cast<geometry_float>(2))));
 
 	Polygon<long long> cut_square{
 	    {0, 0},
@@ -313,14 +327,17 @@ int main() {
 			}
 		}
 		auto [diameter, p, q] = convex_diameter(convex);
-		long double brute_d = brute_diameter(convex);
+		geometry_float brute_d = brute_diameter(convex);
 		assert(close(diameter, brute_d, 1e-7));
-		assert(close((long double)square(p - q), brute_d * brute_d, 1e-7));
+		assert(close(
+		    static_cast<geometry_float>(square(p - q)),
+		    brute_d * brute_d, 1e-7
+		));
 		assert(
 		    close(max_triangle_area(convex), brute_triangle_area(convex), 1e-7)
 		);
 		auto r = min_bounding_rectangle(convex);
-		long double brute_area = brute_rectangle_area(convex);
+		geometry_float brute_area = brute_rectangle_area(convex);
 		if (!close(r.area, brute_area, 1e-7)) {
 			std::cerr << "area mismatch: " << r.area << ' ' << brute_area
 			          << '\n';
@@ -328,7 +345,8 @@ int main() {
 			std::cerr << '\n';
 			assert(false);
 		}
-		long double brute_perimeter = brute_rectangle_perimeter(convex);
+		geometry_float brute_perimeter =
+		    brute_rectangle_perimeter(convex);
 		if (!close(r.perimeter, brute_perimeter, 1e-7)) {
 			std::cerr << "perimeter mismatch: " << r.perimeter << ' '
 			          << brute_perimeter << '\n';
