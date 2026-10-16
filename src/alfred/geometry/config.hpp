@@ -10,6 +10,42 @@ struct Point;
 #if defined(__SIZEOF_FLOAT128__) || defined(__FLT128_MANT_DIG__)
 
 using f128 = __float128;
+
+// libstdc++ has no arithmetic overloads for __float128.  Keep the common
+// geometry-facing operations available without requiring libquadmath.
+namespace std {
+inline f128 abs(f128 x) { return x < 0 ? -x : x; }
+inline f128 fabs(f128 x) { return abs(x); }
+inline f128 sqrt(f128 x) {
+	if (x == 0) return x;
+	f128 r = static_cast<f128>(
+	    std::sqrt(static_cast<long double>(x))
+	);
+	if (!(r > 0)) return r;
+	for (int i = 0; i < 4; i++) {
+		r = (r + x / r) / 2;
+	}
+	return r;
+}
+inline f128 floor(f128 x) {
+	return static_cast<f128>(std::floor(static_cast<long double>(x)));
+}
+inline f128 ceil(f128 x) {
+	return static_cast<f128>(std::ceil(static_cast<long double>(x)));
+}
+inline f128 trunc(f128 x) {
+	return static_cast<f128>(std::trunc(static_cast<long double>(x)));
+}
+inline f128 round(f128 x) {
+	return static_cast<f128>(std::round(static_cast<long double>(x)));
+}
+inline f128 fmod(f128 x, f128 y) {
+	return static_cast<f128>(
+	    std::fmod(static_cast<long double>(x), static_cast<long double>(y))
+	);
+}
+} // namespace std
+
 std::istream &operator>>(std::istream &is, f128 &p) {
 	long double x;
 	is >> x;

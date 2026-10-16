@@ -1,12 +1,15 @@
 // competitive-verifier: STANDALONE
 
+#include <cmath>
+
 #include "../../src/alfred/geometry/all.hpp"
 #include <algorithm>
 #include <cassert>
-#include <cmath>
 #include <iostream>
 #include <random>
 #include <utility>
+
+using geometry_float = calc_t<long long>;
 
 static bool close(long double a, long double b, long double tol = 1e-8) {
 	return std::abs(a - b) <=
@@ -73,7 +76,7 @@ static long double brute_triangle_area(const Polygon<long long> &p) {
 	return ans;
 }
 
-static long double
+static geometry_float
 brute_min_distance(const Polygon<long long> &a, const Polygon<long long> &b) {
 	for (int i = 0; i < int(a.size()); i++) {
 		for (int j = 0; j < int(b.size()); j++) {
@@ -85,7 +88,7 @@ brute_min_distance(const Polygon<long long> &a, const Polygon<long long> &b) {
 			}
 		}
 	}
-	long double ans = 1e100;
+	geometry_float ans = 1e100;
 	for (int i = 0; i < int(a.size()); i++) {
 		for (int j = 0; j < int(b.size()); j++) {
 			ans = std::min(
@@ -103,29 +106,29 @@ brute_min_distance(const Polygon<long long> &a, const Polygon<long long> &b) {
 	return ans;
 }
 
-static Circle<long double> brute_min_circle(const Polygon<long long> &p) {
-	Circle<long double> best{
+static Circle<geometry_float> brute_min_circle(const Polygon<long long> &p) {
+	Circle<geometry_float> best{
 	    {0, 0},
         1e100
 	};
-	auto consider = [&](Circle<long double> c) {
+	auto consider = [&](Circle<geometry_float> c) {
 		if (c.r < 0) return;
 		for (const auto &q : p) {
-			if (!inside_circle(Point<long double>(q), c)) return;
+			if (!inside_circle(Point<geometry_float>(q), c)) return;
 		}
 		if (c.r < best.r) best = c;
 	};
-	for (const auto &a : p)
-		consider({
-		    {(long double)a.x, (long double)a.y},
-            0
-		});
+	for (const auto &a : p) {
+		consider({Point<geometry_float>(a), 0});
+	}
 	for (int i = 0; i < int(p.size()); i++) {
 		for (int j = i + 1; j < int(p.size()); j++) {
-			Point<long double> a(p[i]), b(p[j]);
+			Point<geometry_float> a(p[i]), b(p[j]);
 			consider({(a + b) / 2, dist(a, b) / 2});
 			for (int k = j + 1; k < int(p.size()); k++) {
-				consider(circumcircle(a, b, Point<long double>(p[k])));
+				consider(circumcircle(
+				    a, b, Point<geometry_float>(p[k])
+				));
 			}
 		}
 	}
@@ -272,7 +275,8 @@ int main() {
         {2, 2},
         {0, 2}
 	};
-	Circle<long double> cover = minimum_enclosing_circle(circle_points);
+	Circle<geometry_float> cover =
+	    minimum_enclosing_circle(circle_points);
 	assert(close(cover.p.x, 1) && close(cover.p.y, 1));
 	assert(close(cover.r, std::sqrt(2.0L)));
 
@@ -361,11 +365,11 @@ int main() {
 		for (int i = 0; i < 8; i++) {
 			points.push_back({int(rng() % 21) - 10, int(rng() % 21) - 10});
 		}
-		Circle<long double> got = minimum_enclosing_circle(points);
-		Circle<long double> expected = brute_min_circle(points);
+		Circle<geometry_float> got = minimum_enclosing_circle(points);
+		Circle<geometry_float> expected = brute_min_circle(points);
 		assert(close(got.r, expected.r, 1e-7));
 		for (const auto &p : points) {
-			assert(inside_circle(Point<long double>(p), got));
+			assert(inside_circle(Point<geometry_float>(p), got));
 		}
 	}
 	return 0;
