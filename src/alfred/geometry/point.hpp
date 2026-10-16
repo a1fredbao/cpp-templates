@@ -80,7 +80,7 @@ using scalar_t = std::conditional_t<is_integral<T>::value, i128, T>;
 // Use __float128 if available
 #if defined(__SIZEOF_FLOAT128__) || defined(__FLT128_MANT_DIG__)
 template <class T>
-using calc_t = std::conditional_t<std::is_floating_point_v<T>, T, __float128>;
+using calc_t = __float128;
 #else
 template <class T>
 using calc_t = std::conditional_t<std::is_floating_point_v<T>, T, long double>;
