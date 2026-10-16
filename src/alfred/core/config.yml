@@ -1,4 +1,7 @@
 contents:
+  - name: Float128
+    codes:
+      - float128.hpp
   - name: Random
     codes:
       - random.hpp

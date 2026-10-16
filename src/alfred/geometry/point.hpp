@@ -77,8 +77,8 @@ using scalar_t = std::conditional_t<is_integral<T>::value, i128, T>;
 
 // Type used by metric operations that may need division or sqrt.
 // Integral coordinates are promoted to long double; floating types are kept.
-// Use __float128 if available
-#if defined(__SIZEOF_FLOAT128__) || defined(__FLT128_MANT_DIG__)
+// Use __float128 if available.
+#if AF_HAS_FLOAT128
 template <class T>
 using calc_t = __float128;
 #else
