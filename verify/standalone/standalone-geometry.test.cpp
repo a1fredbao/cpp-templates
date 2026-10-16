@@ -16,9 +16,9 @@ static bool close(
     geometry_float tol = static_cast<geometry_float>(1e-8)
 ) {
 	geometry_float diff = std::abs(a - b);
-	geometry_float scale = std::max<geometry_float>({
-	    static_cast<geometry_float>(1), std::abs(a), std::abs(b)
-	});
+	geometry_float scale = std::max<geometry_float>(
+	    {static_cast<geometry_float>(1), std::abs(a), std::abs(b)}
+	);
 	return diff <= tol * scale;
 }
 
@@ -62,9 +62,7 @@ static geometry_float brute_diameter(const Polygon<long long> &p) {
 	geometry_float ans = 0;
 	for (int i = 0; i < int(p.size()); i++) {
 		for (int j = i + 1; j < int(p.size()); j++) {
-			auto squared = static_cast<geometry_float>(
-			    square(p[i] - p[j])
-			);
+			auto squared = static_cast<geometry_float>(square(p[i] - p[j]));
 			ans = std::max(ans, std::sqrt(squared));
 		}
 	}
@@ -78,9 +76,7 @@ static geometry_float brute_triangle_area(const Polygon<long long> &p) {
 			for (int k = j + 1; k < int(p.size()); k++) {
 				auto c = cross(p[i], p[j], p[k]);
 				if (c < 0) c = -c;
-				ans = std::max(
-				    ans, static_cast<geometry_float>(c) / 2
-				);
+				ans = std::max(ans, static_cast<geometry_float>(c) / 2);
 			}
 		}
 	}
@@ -137,9 +133,7 @@ static Circle<geometry_float> brute_min_circle(const Polygon<long long> &p) {
 			Point<geometry_float> a(p[i]), b(p[j]);
 			consider({(a + b) / 2, dist(a, b) / 2});
 			for (int k = j + 1; k < int(p.size()); k++) {
-				consider(circumcircle(
-				    a, b, Point<geometry_float>(p[k])
-				));
+				consider(circumcircle(a, b, Point<geometry_float>(p[k])));
 			}
 		}
 	}
@@ -250,6 +244,7 @@ int main() {
         {4, 1},
         {3, 1}
 	};
+	std::cerr << min_dist_convex(unit_square, shifted) << '\n';
 	assert(close(min_dist_convex(unit_square, shifted), 2));
 
 	Circle<long long> unit({
@@ -289,8 +284,7 @@ int main() {
         {2, 2},
         {0, 2}
 	};
-	Circle<geometry_float> cover =
-	    minimum_enclosing_circle(circle_points);
+	Circle<geometry_float> cover = minimum_enclosing_circle(circle_points);
 	assert(close(cover.p.x, 1) && close(cover.p.y, 1));
 	assert(close(cover.r, std::sqrt(static_cast<geometry_float>(2))));
 
@@ -330,8 +324,7 @@ int main() {
 		geometry_float brute_d = brute_diameter(convex);
 		assert(close(diameter, brute_d, 1e-7));
 		assert(close(
-		    static_cast<geometry_float>(square(p - q)),
-		    brute_d * brute_d, 1e-7
+		    static_cast<geometry_float>(square(p - q)), brute_d * brute_d, 1e-7
 		));
 		assert(
 		    close(max_triangle_area(convex), brute_triangle_area(convex), 1e-7)
@@ -345,8 +338,7 @@ int main() {
 			std::cerr << '\n';
 			assert(false);
 		}
-		geometry_float brute_perimeter =
-		    brute_rectangle_perimeter(convex);
+		geometry_float brute_perimeter = brute_rectangle_perimeter(convex);
 		if (!close(r.perimeter, brute_perimeter, 1e-7)) {
 			std::cerr << "perimeter mismatch: " << r.perimeter << ' '
 			          << brute_perimeter << '\n';
