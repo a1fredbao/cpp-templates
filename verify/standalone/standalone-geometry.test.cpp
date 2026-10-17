@@ -244,7 +244,6 @@ int main() {
         {4, 1},
         {3, 1}
 	};
-	std::cerr << min_dist_convex(unit_square, shifted) << '\n';
 	assert(close(min_dist_convex(unit_square, shifted), 2));
 
 	Circle<long long> unit({

@@ -51,7 +51,11 @@ inline f128 fmod(f128 x, f128 y) {
 	);
 }
 
-#if !defined(_GLIBCXX_USE_FLOAT128)
+// libstdc++ added numeric_limits<__float128> in GCC 14.  GCC 13 defines
+// _GLIBCXX_USE_FLOAT128 but has no specialization, so version 13 and older
+// still need the local definition.
+#if !defined(_GLIBCXX_USE_FLOAT128) || \
+    (defined(_GLIBCXX_RELEASE) && _GLIBCXX_RELEASE < 14)
 __extension__ template <>
 struct numeric_limits<f128> {
 	static constexpr bool is_specialized = true;
@@ -96,6 +100,9 @@ struct numeric_limits<f128> {
 	static constexpr float_round_style round_style = round_to_nearest;
 };
 #endif
+
+static_assert(numeric_limits<f128>::is_specialized);
+static_assert(numeric_limits<f128>::has_infinity);
 } // namespace std
 
 inline std::istream &operator>>(std::istream &is, f128 &p) {
