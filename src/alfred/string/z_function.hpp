@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-// Returns a vector `z` s.t. z[i] equals to lcp(s, s[i..n))
+// Returns a vector `z` where z[i] equals to lcp(s, s[i..n))
 constexpr std::vector<int> z_function(const std::string &s) {
 	int n = s.size(), l = 0, r = 1;
 	std::vector<int> z(n, 0);
