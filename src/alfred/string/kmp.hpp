@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-constexpr std::vector<int> prefix_function(const std::string &s) {
+std::vector<int> prefix_function(const std::string &s) {
 	const int n = s.size();
 	std::vector<int> pi(n, 0);
 	for (int i = 1; i < n; i++) {
